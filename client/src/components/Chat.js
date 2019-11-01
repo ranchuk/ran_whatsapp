@@ -37,23 +37,24 @@ const Chat = ({ reciever }) => {
 
   const handleDelete = async e => {
     e.preventDefault();
-    // const res = await axios.delete(
-    //   `/api/users/chat/delete/${chatInView.username1}/${chatInView.username2}`
-    // );
-    // if (res.status === 200) {
-    dispatch({
-      type: "ChatInView",
-      payload: {
-        ...chatInView,
-        chat: []
-      }
-    });
-    dispatch({
-      type: "DeleteChatTemporary",
-      payload: {
-        reciever: reciever
-      }
-    });
+    const res = await axios.delete(
+      `/api/users/chat/delete/${chatInView.username1}/${chatInView.username2}`
+    );
+    if (res.status === 200) {
+      dispatch({
+        type: "ChatInView",
+        payload: {
+          ...chatInView,
+          chat: []
+        }
+      });
+      dispatch({
+        type: "DeleteChatTemporary",
+        payload: {
+          reciever: reciever
+        }
+      });
+    }
   };
 
   return (
@@ -62,22 +63,39 @@ const Chat = ({ reciever }) => {
       style={{
         width: "100%",
         height: "100%",
-        position: "relative",
-        overflowY: "auto"
+        position: "relative"
       }}
     >
-      <div>
+      <div
+        style={{
+          overflowY: "auto",
+          width: "100%",
+          height: "100%",
+          paddingRight: 10,
+          paddingTop: 20
+        }}
+      >
         {chatInView.chat.map((item, index) => {
           if (item.sender === username) {
             return (
               <div
                 key={index}
                 style={{
-                  backgroundColor: "green",
-                  color: "white"
+                  textAlign: "right",
+                  color: "white",
+                  marginBottom: 20
                 }}
               >
-                {item.message}
+                <span
+                  style={{
+                    backgroundColor: "#25D366",
+                    borderRadius: 5,
+                    minWidth: 100,
+                    padding: 10
+                  }}
+                >
+                  {item.message}
+                </span>
               </div>
             );
           } else {
@@ -85,12 +103,20 @@ const Chat = ({ reciever }) => {
               <div
                 key={index}
                 style={{
-                  backgroundColor: "grey",
                   color: "white",
-                  textAlign: "right"
+                  marginBottom: 20
                 }}
               >
-                {item.message}
+                <span
+                  style={{
+                    backgroundColor: "grey",
+                    borderRadius: 5,
+                    minWidth: 100,
+                    padding: 10
+                  }}
+                >
+                  {item.message}
+                </span>
               </div>
             );
           }

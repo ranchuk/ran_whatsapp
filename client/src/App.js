@@ -48,14 +48,17 @@ function appReducer(state = initialState, action) {
         ) {
           newChats[index].chat.push(action.payload);
           obj = { chats: newChats };
-          if (
-            (state.chatInView.username1 === reciever &&
-              state.chatInView.username2 === sender) ||
-            (state.chatInView.username2 === reciever &&
-              state.chatInView.username1 === sender)
-          ) {
-            const newChatInView = JSON.parse(JSON.stringify(newChats[index]));
-            obj = { ...state, chats: newChats, chatInView: newChatInView };
+          if (Object.keys(state.chatInView).length > 0) {
+            //maby we didnt pick chat yet
+            if (
+              (state.chatInView.username1 === reciever &&
+                state.chatInView.username2 === sender) ||
+              (state.chatInView.username2 === reciever &&
+                state.chatInView.username1 === sender)
+            ) {
+              const newChatInView = JSON.parse(JSON.stringify(newChats[index]));
+              obj = { ...state, chats: newChats, chatInView: newChatInView };
+            }
           }
           return;
         }
@@ -77,20 +80,23 @@ function appReducer(state = initialState, action) {
       return { ...state, chats: newChats };
     }
     case "someoneWriting": {
-      const { sender, length } = action.payload;
-      const newChatInView = JSON.parse(JSON.stringify(state.chatInView));
+      if (Object.keys(state.chatInView).length > 0) {
+        //maby we didnt pick chat yet
+        const { sender, length } = action.payload;
+        const newChatInView = JSON.parse(JSON.stringify(state.chatInView));
 
-      if (
-        (state.chatInView.username1 === sender ||
-          state.chatInView.username2 === sender) &&
-        length > 0
-      ) {
-        newChatInView.isWriting = true;
-      } else {
-        newChatInView.isWriting = false;
-      }
+        if (
+          (state.chatInView.username1 === sender ||
+            state.chatInView.username2 === sender) &&
+          length > 0
+        ) {
+          newChatInView.isWriting = true;
+        } else {
+          newChatInView.isWriting = false;
+        }
 
-      return { ...state, chatInView: newChatInView };
+        return { ...state, chatInView: newChatInView };
+      } else return state;
     }
     default: {
       return state;

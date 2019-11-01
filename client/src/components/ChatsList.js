@@ -6,8 +6,6 @@ const ChatsList = () => {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
   const [reciever, setReciever] = useState("");
-  // const [isClientWriting, setIsClientWriting] = useState(false);
-
   const { chats: chatList, username, chatInView } = state;
 
   useEffect(() => {
@@ -23,7 +21,7 @@ const ChatsList = () => {
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
       <h1>Ran-Whatsapp</h1>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", marginTop: 50 }}>
         <div
           className="form-control"
           style={{
