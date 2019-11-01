@@ -1,37 +1,24 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../App";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
-const Chat = ({ openedChat }) => {
-  const [state, dispatch] = useContext(Context);
-
-  const [chat, setChat] = useState([]);
+const Chat = ({ reciever }) => {
+  const state = useSelector(state => state);
   const [newMessage, setNewMessage] = useState("");
-  const [reciever, setReciver] = useState("");
-
-  const { username, socket } = state;
-
-  useEffect(() => {
-    // setChat(openedChat);
-    const reciever =
-      openedChat.username1 === username
-        ? openedChat.username2
-        : openedChat.username1;
-    setReciver(reciever);
-    setChat(openedChat);
-  }, [openedChat]);
-
-  useEffect(() => {
-    state.socket.on("FromServer", data => {
-      const newChat = [...chat, data];
-      setChat(newChat);
-    });
-  });
+  const { username, socket, chatInView } = state;
 
   const handleChange = e => {
     setNewMessage(e.target.value);
+    const data = {
+      time: "",
+      sender: state.username,
+      reciever: reciever,
+      message: e.target.value
+    };
+    // socket.emit("clientWriting", data);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const data = {
       time: "",
@@ -39,30 +26,66 @@ const Chat = ({ openedChat }) => {
       reciever: reciever,
       message: newMessage
     };
-    socket.emit("FromClient", data);
+    setNewMessage("");
+    socket.emit("clientNewMessage", data);
+
+    // const res = await axios.post("/api/users/addMessage", data);
+    // if (res.status === 200) {
+    //   console.log("success");
+    //   console.log(res.data.chat);
+    // }
+  };
+
+  const handleDelete = async e => {
+    const res = await axios.post(
+      `/api/users/chat/delete/${chatInView.username1}/${chatInView.username2}`
+    );
+    if (res.status === 200) {
+      console.log("success");
+      console.log(res.data.chat);
+    }
   };
 
   return (
     <div
       id="chat"
-      style={{ width: "100%", height: "100%", position: "relative" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        position: "relative",
+        overflowY: "auto"
+      }}
     >
       <div>
-        {chat.chat.map((item, index) => {
+        {chatInView.chat.map((item, index) => {
           if (item.sender === username) {
             return (
-              <div key={index} style={{ color: "grey" }}>
+              <div
+                key={index}
+                style={{
+                  backgroundColor: "green",
+                  color: "white"
+                }}
+              >
                 {item.message}
               </div>
             );
           } else {
             return (
-              <div key={index} style={{ color: "green" }}>
+              <div
+                key={index}
+                style={{
+                  backgroundColor: "grey",
+                  color: "white",
+                  textAlign: "right"
+                }}
+              >
                 {item.message}
               </div>
             );
           }
         })}
+        {chatInView.isClientWriting ? `${reciever} is writing...` : null}
       </div>
       <form
         onSubmit={handleSubmit}
@@ -77,8 +100,21 @@ const Chat = ({ openedChat }) => {
           placeholder="Enter Your Message..."
           className="form-control"
           onChange={handleChange}
+          value={newMessage}
         />
-        <button className="btn btn-primary">Send</button>
+        <button
+          className="form-control btn btn-primary"
+          style={{ width: "20%" }}
+        >
+          Send
+        </button>
+        <button
+          className="form-control btn btn-danger"
+          style={{ width: "20%" }}
+          onClick={handleDelete}
+        >
+          Delete Messages
+        </button>
       </form>
     </div>
   );

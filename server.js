@@ -14,7 +14,7 @@ app.use(bodyparser.json());
 const users = require("./routes/api/users");
 // Use Routes
 app.use("/api/users", users);
-
+const connections = [];
 // Connect to mongo
 mongoose.connect(
   keys.mongoURI,
@@ -28,21 +28,48 @@ mongoose.connect(
     }
     client.on("connection", socket => {
       // console.log(socket);
+      connections.push(socket.id);
+      console.log(connections);
 
       socket.on("join", function(username) {
         socket.join(username);
       });
-      socket.on("FromClient", function(data) {
-        //TODO Add data to data base
-        console.log(data);
 
-        if (client.sockets.adapter.rooms[data.reciever]) {
-          client.to(data.reciever).emit("FromServer", data);
-        }
-        if (client.sockets.adapter.rooms[data.sender]) {
-          client.to(data.sender).emit("FromServer", data);
-        }
+      socket.on("clientWriting", function(data) {
+        // if (client.sockets.adapter.rooms[data.reciever]) {
+        //   client.to(data.reciever).emit("clientWriting", data);
+        // }
       });
+
+      socket.on("clientNewMessage", function(data) {
+        const username1 = data.sender;
+        const username2 = data.reciever;
+        Chat.find({
+          $or: [
+            { $and: [{ username1: username1 }, { username2: username2 }] },
+            { $and: [{ username1: username2 }, { username2: username1 }] }
+          ]
+        })
+          .then(chat => {
+            //Add to chat array
+            chat[0].chat.push(data);
+            chat[0]
+              .save()
+              .then(chat => {
+                if (client.sockets.adapter.rooms[data.reciever]) {
+                  client.to(data.reciever).emit("clientNewMessage", data);
+                }
+                if (client.sockets.adapter.rooms[data.sender]) {
+                  client.to(data.sender).emit("clientNewMessage", data);
+                }
+              })
+              .catch(err => console.error(err));
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      });
+
       // let chat = db.collection("chats");
 
       // // Create function to send status

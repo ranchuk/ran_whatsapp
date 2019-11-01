@@ -1,35 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../App";
+import React, { useState, useEffect } from "react";
 import Chat from "./Chat";
+import { useSelector, useDispatch } from "react-redux";
 
-const ChatsList = props => {
-  const [chatList, setChatList] = useState([]);
-  const [state, dispatch] = useContext(Context);
-  const [openedChat, setOpenedChat] = useState({});
+const ChatsList = () => {
+  const dispatch = useDispatch();
+  const state = useSelector(state => state);
+  const [reciever, setReciever] = useState("");
+  const [isClientWriting, setIsClientWriting] = useState(false);
 
-  const { chats, username } = state;
-
-  useEffect(() => {
-    setChatList(chats);
-  }, [chats]);
+  const { chats: chatList, username, chatInView } = state;
 
   useEffect(() => {
-    state.socket.on("FromServer", data => {
-      for (let i = 0; i < chatList.length; i++) {
-        if (
-          (chatList[i].username1 === data.reciever) &
-            (chatList[i].username2 === data.sender) ||
-          (chatList[i].username1 === data.sender) &
-            (chatList[i].username2 === data.reciever)
-        ) {
-          const newChatList = [...JSON.parse(JSON.stringify(chatList))];
-          newChatList[i].chat.push(data);
-          setChatList(newChatList);
-          break;
-        }
-      }
+    state.socket.on("clientNewMessage", data => {
+      dispatch({ type: "AddMessage", payload: data });
     });
-  });
+  }, []);
 
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
@@ -42,33 +27,37 @@ const ChatsList = props => {
             width: 200
           }}
         >
-          {chatList.map((item, index) => {
-            const reciever =
-              item.username1 !== username ? item.username1 : item.username2;
-            return (
-              <div
-                key={index}
-                onClick={e => {
-                  setOpenedChat(item);
-                }}
-              >
-                <span>
-                  {reciever}
-                  's Room
-                </span>
-              </div>
-            );
-          })}
+          {chatList &&
+            chatList.map((item, index) => {
+              const reciever =
+                item.username1 !== username ? item.username1 : item.username2;
+              return (
+                <div
+                  className="chatItem"
+                  style={{ cursor: "pointer" }}
+                  key={index}
+                  onClick={e => {
+                    dispatch({ type: "ChatInView", payload: item });
+                    setReciever(reciever);
+                  }}
+                >
+                  <span>
+                    {reciever}
+                    's Room
+                  </span>
+                </div>
+              );
+            })}
         </div>
         <div
           className="form-control"
           style={{
             height: 500,
-            width: 400
+            width: 700
           }}
         >
-          {Object.keys(openedChat).length > 0 && (
-            <Chat openedChat={openedChat} />
+          {Object.keys(chatInView).length && (
+            <Chat reciever={reciever} isClientWriting={isClientWriting} />
           )}
         </div>
       </div>

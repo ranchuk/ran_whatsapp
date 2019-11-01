@@ -3,13 +3,15 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import ChatsList from "./components/ChatsList";
 import Login from "./components/Login";
 import { createStore, applyMiddleware, compose } from "redux";
-import { Provider, useSelector, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import "./App.css";
+
 const initialState = {
   username: "",
   chats: [],
-  chatInView: {},
-  socket: ""
+  socket: "",
+  chatInView: {}
 };
 const middleware = [thunk];
 
@@ -36,19 +38,61 @@ function appReducer(state = initialState, action) {
       };
     }
     case "AddMessage": {
-      return { ...state, chats: action.payload };
+      const { reciever, sender } = action.payload;
+      const newChats = JSON.parse(JSON.stringify(state.chats));
+      let obj = {};
+      state.chats.forEach((chat, index) => {
+        if (
+          (chat.username1 === sender && chat.username2 === reciever) ||
+          (chat.username1 === reciever && chat.username2 === sender)
+        ) {
+          console.log({ sender, reciever });
+          console.log({ chat });
+
+          newChats[index].chat.push(action.payload);
+          if (
+            (state.chatInView.username1 === reciever &&
+              state.chatInView.username2 === sender) ||
+            (state.chatInView.username2 === reciever &&
+              state.chatInView.username1 === sender)
+          ) {
+            const newChatInView = JSON.parse(JSON.stringify(newChats[index]));
+            obj = { ...state, chats: newChats, chatInView: newChatInView };
+          }
+          return;
+        }
+      });
+      return { ...state, ...obj };
     }
     case "ChatInView": {
       return { ...state, chatInView: action.payload };
     }
-    case "AddSocket": {
-      return { ...state, socket: action.payload };
+    case "someoneWriting": {
+      const username = action.payload;
+      const newChats = JSON.parse(JSON.stringify(state.chats));
+      newChats.forEach(chat => {
+        if (chat.username1 === username || chat.username2 === username) {
+          chat.isWriting = true;
+        }
+      });
+      return { ...state, chats: newChats };
+    }
+    case "someoneStoppedWriting": {
+      const username = action.payload;
+      const newChats = JSON.parse(JSON.stringify(state.chats));
+      newChats.forEach(chat => {
+        if (chat.username1 === username || chat.username2 === username) {
+          chat.isWriting = false;
+        }
+      });
+      return { ...state, chats: newChats };
     }
     default: {
       return state;
     }
   }
 }
+
 export const Context = React.createContext();
 
 const App = () => {

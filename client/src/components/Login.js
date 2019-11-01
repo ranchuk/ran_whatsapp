@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Context } from "../App";
+import { useDispatch } from "react-redux";
 import io from "socket.io-client";
 
 const Login = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [state, dispatch] = useContext(Context);
+  const dispatch = useDispatch();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -19,19 +19,19 @@ const Login = props => {
       const socket = io.connect("/");
       if (socket !== undefined) {
         socket.emit("join", username);
-        // dispatch({
-        //   type: "Login",
-        //   payload: {
-        //     username: username,
-        //     token: 0,
-        //     chats: res.data.chats,
-        //     socket: socket
-        //   }
-        // });
-        props.history.push("/chats");
       }
+      dispatch({
+        type: "Login",
+        payload: {
+          username: username,
+          token: 0,
+          chats: res.data.chats,
+          socket: socket
+        }
+      });
+      //after login, redirect to ChatList page
+      props.history.push("/chats");
     }
-    //after login, redirect to contacts page
   };
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
