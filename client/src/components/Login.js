@@ -35,7 +35,7 @@ const Login = props => {
   };
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
-      <h1 className="text-center">Welcome to ChatPool</h1>
+      <h1 className="text-center">Ran-Whatsapp</h1>
       <form onSubmit={handleSubmit}>
         <input
           placeholder="Enter username or email address"

@@ -46,10 +46,8 @@ function appReducer(state = initialState, action) {
           (chat.username1 === sender && chat.username2 === reciever) ||
           (chat.username1 === reciever && chat.username2 === sender)
         ) {
-          console.log({ sender, reciever });
-          console.log({ chat });
-
           newChats[index].chat.push(action.payload);
+          obj = { chats: newChats };
           if (
             (state.chatInView.username1 === reciever &&
               state.chatInView.username2 === sender) ||
@@ -68,14 +66,20 @@ function appReducer(state = initialState, action) {
       return { ...state, chatInView: action.payload };
     }
     case "someoneWriting": {
-      const username = action.payload;
-      const newChats = JSON.parse(JSON.stringify(state.chats));
-      newChats.forEach(chat => {
-        if (chat.username1 === username || chat.username2 === username) {
-          chat.isWriting = true;
-        }
-      });
-      return { ...state, chats: newChats };
+      const { sender, length } = action.payload;
+      const newChatInView = JSON.parse(JSON.stringify(state.chatInView));
+
+      if (
+        (state.chatInView.username1 === sender ||
+          state.chatInView.username2 === sender) &&
+        length > 0
+      ) {
+        newChatInView.isWriting = true;
+      } else {
+        newChatInView.isWriting = false;
+      }
+
+      return { ...state, chatInView: newChatInView };
     }
     case "someoneStoppedWriting": {
       const username = action.payload;

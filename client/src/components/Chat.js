@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 const Chat = ({ reciever }) => {
   const state = useSelector(state => state);
   const [newMessage, setNewMessage] = useState("");
   const { username, socket, chatInView } = state;
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     setNewMessage(e.target.value);
@@ -13,9 +14,9 @@ const Chat = ({ reciever }) => {
       time: "",
       sender: state.username,
       reciever: reciever,
-      message: e.target.value
+      length: e.target.value.length
     };
-    // socket.emit("clientWriting", data);
+    socket.emit("clientWriting", data);
   };
 
   const handleSubmit = async e => {
@@ -31,19 +32,23 @@ const Chat = ({ reciever }) => {
 
     // const res = await axios.post("/api/users/addMessage", data);
     // if (res.status === 200) {
-    //   console.log("success");
-    //   console.log(res.data.chat);
     // }
   };
 
   const handleDelete = async e => {
-    const res = await axios.post(
-      `/api/users/chat/delete/${chatInView.username1}/${chatInView.username2}`
-    );
-    if (res.status === 200) {
-      console.log("success");
-      console.log(res.data.chat);
-    }
+    e.preventDefault();
+    // const res = await axios.delete(
+    //   `/api/users/chat/delete/${chatInView.username1}/${chatInView.username2}`
+    // );
+    // if (res.status === 200) {
+    dispatch({
+      type: "ChatInView",
+      payload: {
+        ...chatInView,
+        chat: []
+      }
+    });
+    // }
   };
 
   return (
@@ -85,7 +90,7 @@ const Chat = ({ reciever }) => {
             );
           }
         })}
-        {chatInView.isClientWriting ? `${reciever} is writing...` : null}
+        {chatInView.isWriting ? `${reciever} is writing...` : null}
       </div>
       <form
         onSubmit={handleSubmit}

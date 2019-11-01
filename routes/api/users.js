@@ -31,10 +31,9 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.post("/chat/delete/:username1/:username2", (req, res) => {
+router.delete("/chat/delete/:username1/:username2", (req, res) => {
   const username1 = req.params.username1;
   const username2 = req.params.username2;
-  console.log(username1, username2);
   Chat.find({
     $or: [
       { $and: [{ username1: username1 }, { username2: username2 }] },
@@ -44,7 +43,10 @@ router.post("/chat/delete/:username1/:username2", (req, res) => {
     .then(chat => {
       //delete chat between 2 clients
       chat[0].chat = [];
-      chat[0].save().then(chat => res.json({ success: true, chat: chat }));
+      chat[0].save().then(chat => {
+        console.log(`Delete successfull chat of ${username1} and ${username2}`);
+        res.json({ success: true, chat: chat });
+      });
     })
     .catch(err => {
       socket.emit("status", s);

@@ -6,13 +6,17 @@ const ChatsList = () => {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
   const [reciever, setReciever] = useState("");
-  const [isClientWriting, setIsClientWriting] = useState(false);
+  // const [isClientWriting, setIsClientWriting] = useState(false);
 
   const { chats: chatList, username, chatInView } = state;
 
   useEffect(() => {
     state.socket.on("clientNewMessage", data => {
       dispatch({ type: "AddMessage", payload: data });
+    });
+
+    state.socket.on("clientWriting", data => {
+      dispatch({ type: "someoneWriting", payload: data });
     });
   }, []);
 
@@ -56,9 +60,9 @@ const ChatsList = () => {
             width: 700
           }}
         >
-          {Object.keys(chatInView).length && (
-            <Chat reciever={reciever} isClientWriting={isClientWriting} />
-          )}
+          {Object.keys(chatInView).length > 0 ? (
+            <Chat reciever={reciever} />
+          ) : null}
         </div>
       </div>
     </div>

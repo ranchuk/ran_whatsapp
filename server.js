@@ -29,16 +29,21 @@ mongoose.connect(
     client.on("connection", socket => {
       // console.log(socket);
       connections.push(socket.id);
-      console.log(connections);
+      console.log({ connections });
 
       socket.on("join", function(username) {
         socket.join(username);
       });
+      socket.on("disconnect", () => {
+        const index = connections.indexOf(socket.id);
+        connections.splice(index, 1);
+        console.log({ connections });
+      });
 
       socket.on("clientWriting", function(data) {
-        // if (client.sockets.adapter.rooms[data.reciever]) {
-        //   client.to(data.reciever).emit("clientWriting", data);
-        // }
+        if (client.sockets.adapter.rooms[data.reciever]) {
+          client.to(data.reciever).emit("clientWriting", data);
+        }
       });
 
       socket.on("clientNewMessage", function(data) {
