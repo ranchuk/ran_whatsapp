@@ -22,7 +22,7 @@ const ChatsList = () => {
 
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
-      <h1>Chats</h1>
+      <h1>Ran-Whatsapp</h1>
       <div style={{ display: "flex" }}>
         <div
           className="form-control"
@@ -45,10 +45,7 @@ const ChatsList = () => {
                     setReciever(reciever);
                   }}
                 >
-                  <span>
-                    {reciever}
-                    's Room
-                  </span>
+                  <span>{reciever}</span>
                 </div>
               );
             })}

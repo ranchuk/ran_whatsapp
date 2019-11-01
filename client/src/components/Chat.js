@@ -48,7 +48,12 @@ const Chat = ({ reciever }) => {
         chat: []
       }
     });
-    // }
+    dispatch({
+      type: "DeleteChatTemporary",
+      payload: {
+        reciever: reciever
+      }
+    });
   };
 
   return (

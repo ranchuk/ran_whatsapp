@@ -65,6 +65,17 @@ function appReducer(state = initialState, action) {
     case "ChatInView": {
       return { ...state, chatInView: action.payload };
     }
+    case "DeleteChatTemporary": {
+      const { reciever } = action.payload;
+      const newChats = JSON.parse(JSON.stringify(state.chats));
+      state.chats.forEach((chat, index) => {
+        if (chat.username1 === reciever || chat.username2 === reciever) {
+          newChats[index].chat = [];
+          return;
+        }
+      });
+      return { ...state, chats: newChats };
+    }
     case "someoneWriting": {
       const { sender, length } = action.payload;
       const newChatInView = JSON.parse(JSON.stringify(state.chatInView));
@@ -80,16 +91,6 @@ function appReducer(state = initialState, action) {
       }
 
       return { ...state, chatInView: newChatInView };
-    }
-    case "someoneStoppedWriting": {
-      const username = action.payload;
-      const newChats = JSON.parse(JSON.stringify(state.chats));
-      newChats.forEach(chat => {
-        if (chat.username1 === username || chat.username2 === username) {
-          chat.isWriting = false;
-        }
-      });
-      return { ...state, chats: newChats };
     }
     default: {
       return state;
