@@ -13,7 +13,7 @@ const Chat = ({ reciever }) => {
     const data = {
       time: "",
       sender: state.username,
-      reciever: reciever,
+      reciever: chatInView.reciever,
       length: e.target.value.length
     };
     window.socket.emit("clientWriting", data);
@@ -24,10 +24,11 @@ const Chat = ({ reciever }) => {
     const data = {
       time: "",
       sender: state.username,
-      reciever: reciever,
+      reciever: chatInView.reciever,
       message: newMessage
     };
     setNewMessage("");
+    // console.log(data);
     window.socket.emit("clientNewMessage", data);
 
     // const res = await axios.post("/api/users/addMessage", data);
@@ -121,7 +122,7 @@ const Chat = ({ reciever }) => {
             );
           }
         })}
-        {chatInView.isWriting ? `${reciever} is writing...` : null}
+        {chatInView.isWriting ? `${chatInView.reciever} is writing...` : null}
       </div>
       <form
         onSubmit={handleSubmit}

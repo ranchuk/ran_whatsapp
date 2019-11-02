@@ -13,6 +13,7 @@ const ChatsList = () => {
       dispatch({ type: "AddMessage", payload: data });
     });
     window.socket.on("clientWriting", data => {
+      console.log(data);
       dispatch({ type: "someoneWriting", payload: data });
     });
   }, []);
@@ -43,7 +44,10 @@ const ChatsList = () => {
                   }}
                   key={index}
                   onClick={e => {
-                    dispatch({ type: "ChatInView", payload: item });
+                    dispatch({
+                      type: "ChatInView",
+                      payload: { ...item, reciever }
+                    });
                     setReciever(reciever);
                   }}
                 >

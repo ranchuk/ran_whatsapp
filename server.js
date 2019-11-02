@@ -32,6 +32,7 @@ mongoose.connect(
       console.log({ connections });
 
       socket.on("join", function(username) {
+        console.log("join", { username });
         socket.join(username);
       });
       socket.on("disconnect", () => {
@@ -41,6 +42,8 @@ mongoose.connect(
       });
 
       socket.on("clientWriting", function(data) {
+        console.log(data);
+
         if (client.sockets.adapter.rooms[data.reciever]) {
           client.to(data.reciever).emit("clientWriting", data);
         }
@@ -49,6 +52,7 @@ mongoose.connect(
       socket.on("clientNewMessage", function(data) {
         const username1 = data.sender;
         const username2 = data.reciever;
+        client.to(data.reciever).emit("clientWriting", { length: 0 });
         Chat.find({
           $or: [
             { $and: [{ username1: username1 }, { username2: username2 }] },
@@ -56,15 +60,19 @@ mongoose.connect(
           ]
         })
           .then(chat => {
+            // console.log(chat);
             //Add to chat array
             chat[0].chat.push(data);
             chat[0]
               .save()
               .then(chat => {
                 if (client.sockets.adapter.rooms[data.reciever]) {
+                  console.log(data.reciever);
                   client.to(data.reciever).emit("clientNewMessage", data);
                 }
                 if (client.sockets.adapter.rooms[data.sender]) {
+                  console.log(data.sender);
+
                   client.to(data.sender).emit("clientNewMessage", data);
                 }
               })

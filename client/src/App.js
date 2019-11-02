@@ -11,6 +11,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 import io from "socket.io-client";
+import axios from "axios";
 
 const persistConfig = {
   key: "root",
@@ -18,23 +19,22 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, appReducer);
 
-const initialState = {
+const middleware = [thunk];
+var initialState = {
   username: "",
   chats: [],
-  socket: "",
   chatInView: {}
 };
-const middleware = [thunk];
-
 window.socket = io.connect("/");
 if (window.socket !== undefined) {
-  if (JSON.parse(localStorage.getItem(localStorage.key(0)))) {
-    const localstorageObj = JSON.parse(
-      localStorage.getItem(localStorage.key(0))
-    );
-    window.socket.emit("join", localstorageObj.username);
+  if (localStorage.getItem("persist:root")) {
+    const data = JSON.parse(localStorage.getItem("persist:root"));
+    // console.log(data.username);
+    // console.log(data.username.replace(/['"]+/g, ""));
+    window.socket.emit("join", data.username.replace(/['"]+/g, ""));
   }
 }
+
 const store = createStore(
   persistedReducer,
   initialState,
@@ -54,12 +54,12 @@ function appReducer(state = initialState, action) {
       return {
         ...state,
         username: action.payload.username,
-        chats: action.payload.chats,
-        socket: action.payload.socket
+        chats: action.payload.chats
       };
     }
     case "AddMessage": {
       const { reciever, sender } = action.payload;
+      // console.log({ reciever, sender });
       const newChats = JSON.parse(JSON.stringify(state.chats));
       let obj = {};
       state.chats.forEach((chat, index) => {
@@ -78,7 +78,15 @@ function appReducer(state = initialState, action) {
                 state.chatInView.username1 === sender)
             ) {
               const newChatInView = JSON.parse(JSON.stringify(newChats[index]));
-              obj = { ...state, chats: newChats, chatInView: newChatInView };
+              obj = {
+                ...state,
+                chats: newChats,
+                chatInView: {
+                  ...state.chatInView,
+                  chat: [...newChatInView.chat]
+                }
+              };
+              // console.log(obj);
             }
           }
           return;
