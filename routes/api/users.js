@@ -80,7 +80,31 @@ router.post("/register", (req, res) => {
       console.error(err);
     });
 });
+router.post("/newContact", (req, res) => {
+  const { username, contact } = req.body;
 
+  //Find user by email
+  User.findOne({ username: contact })
+    .then(user => {
+      // Check for user
+      if (!user) {
+        return res.status(404).json("User already exist");
+      }
+      const newChat = new Chat({
+        username1: username,
+        username2: contact,
+        chat: []
+      });
+
+      newChat
+        .save()
+        .then(user => res.json(newChat))
+        .catch(err => console.log(err));
+    })
+    .catch(err => {
+      console.error(err);
+    });
+});
 // router.post("/chat/addmessage", (req, res) => {
 //   const username1 = req.body.sender;
 //   const username2 = req.body.reciever;

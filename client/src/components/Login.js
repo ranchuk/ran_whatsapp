@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-// import io from "socket.io-client";
 
 const Login = props => {
   const [username, setUsername] = useState("");

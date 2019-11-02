@@ -11,7 +11,6 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 import io from "socket.io-client";
-import axios from "axios";
 
 const persistConfig = {
   key: "root",
@@ -26,13 +25,14 @@ var initialState = {
   chatInView: {}
 };
 window.socket = io.connect("/");
+
 if (window.socket !== undefined) {
   if (localStorage.getItem("persist:root")) {
     const data = JSON.parse(localStorage.getItem("persist:root"));
-    // console.log(data.username);
-    // console.log(data.username.replace(/['"]+/g, ""));
     window.socket.emit("join", data.username.replace(/['"]+/g, ""));
   }
+} else {
+  window.location.href = "/";
 }
 
 const store = createStore(

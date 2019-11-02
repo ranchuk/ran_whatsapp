@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Chat from "./Chat";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 const ChatsList = () => {
   const dispatch = useDispatch();
@@ -18,8 +19,27 @@ const ChatsList = () => {
     });
   }, []);
 
+  const handleLogOut = () => {
+    localStorage.removeItem("persist:root");
+    window.location.href = "/";
+  };
+
+  const handleAddContact = async contact => {
+    const res = await axios.post("/api/users/newContact", {
+      username,
+      contact: "adva"
+    });
+    if (res.status === 200) {
+      console.log(res.data);
+      // dispatch({})
+      // window.location.replace("/");
+    }
+  };
+
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
+      <button onClick={handleLogOut}>Log out</button>
+      <button onClick={handleAddContact}>Add Contact</button>
       <h1>Ran-Whatsapp</h1>
       <div style={{ display: "flex", marginTop: 50 }}>
         <div

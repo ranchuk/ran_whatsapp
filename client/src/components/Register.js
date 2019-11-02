@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 
-const Register = props => {
+const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -17,6 +15,7 @@ const Register = props => {
     });
     if (res.status === 200) {
       //after login, redirect to Login
+      localStorage.removeItem("persist:root");
       window.location.replace("/");
     }
   };
