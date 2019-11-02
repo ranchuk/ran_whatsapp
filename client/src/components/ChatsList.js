@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import Chat from "./Chat";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
 
 const ChatsList = () => {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
   const [reciever, setReciever] = useState("");
+  const [showwModal, setShowModal] = useState(false);
+  const [newContact, setNewContact] = useState("");
   const { chats: chatList, username, chatInView } = state;
 
   useEffect(() => {
@@ -24,10 +30,10 @@ const ChatsList = () => {
     window.location.href = "/";
   };
 
-  const handleAddContact = async contact => {
-    const res = await axios.post("/api/users/newContact", {
+  const handleAddContact = async () => {
+    const res = await axios.post(`/api/users/newContact`, {
       username,
-      contact: "adva"
+      contact: newContact
     });
     if (res.status === 200) {
       console.log(res.data);
@@ -39,7 +45,44 @@ const ChatsList = () => {
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
       <button onClick={handleLogOut}>Log out</button>
-      <button onClick={handleAddContact}>Add Contact</button>
+      <button onClick={() => setShowModal(true)}>Add Contact</button>
+      <Modal show={showwModal} onHide={() => setShowModal(false)}>
+        <Modal.Header>
+          <Modal.Title>Add New Contact</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <InputGroup className="mb-3">
+            <FormControl
+              onChange={e => {
+                setNewContact(e.target.value);
+              }}
+              value={newContact}
+              placeholder="Contact Name..."
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+          </InputGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowModal(false);
+            }}
+          >
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setShowModal(false);
+              handleAddContact();
+            }}
+          >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <h1>Ran-Whatsapp</h1>
       <div style={{ display: "flex", marginTop: 50 }}>
         <div

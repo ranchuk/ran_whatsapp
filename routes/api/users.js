@@ -88,18 +88,35 @@ router.post("/newContact", (req, res) => {
     .then(user => {
       // Check for user
       if (!user) {
-        return res.status(404).json("User already exist");
+        return res.status(404).json("User not exist");
       }
-      const newChat = new Chat({
-        username1: username,
-        username2: contact,
-        chat: []
-      });
+      const username1 = username;
+      const username2 = contact;
+      Chat.find({
+        $or: [
+          { $and: [{ username1: username1 }, { username2: username2 }] },
+          { $and: [{ username1: username2 }, { username2: username1 }] }
+        ]
+      })
+        .then(chat => {
+          console.log(chat);
+          if (chat.length !== 0) {
+            return res.status(404).json("Chat already exist");
+          }
+          const newChat = new Chat({
+            username1: username,
+            username2: contact,
+            chat: []
+          });
 
-      newChat
-        .save()
-        .then(user => res.json(newChat))
-        .catch(err => console.log(err));
+          newChat
+            .save()
+            .then(user => res.json(newChat))
+            .catch(err => console.log(err));
+        })
+        .catch(err => {
+          console.error(err);
+        });
     })
     .catch(err => {
       console.error(err);
