@@ -127,6 +127,11 @@ function appReducer(state = initialState, action) {
         return { ...state, chatInView: newChatInView };
       } else return state;
     }
+    case "AddContact": {
+      const newChats = JSON.parse(JSON.stringify(state.chats));
+      newChats.push(action.payload);
+      return { ...state, chats: newChats };
+    }
     default: {
       return state;
     }

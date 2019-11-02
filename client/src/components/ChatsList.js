@@ -37,8 +37,7 @@ const ChatsList = () => {
     });
     if (res.status === 200) {
       console.log(res.data);
-      // dispatch({})
-      // window.location.replace("/");
+      dispatch({ type: "AddContact", payload: res.data });
     }
   };
 
