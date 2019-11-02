@@ -5,7 +5,7 @@ import axios from "axios";
 const Chat = ({ reciever }) => {
   const state = useSelector(state => state);
   const [newMessage, setNewMessage] = useState("");
-  const { username, socket, chatInView } = state;
+  const { username, chatInView } = state;
   const dispatch = useDispatch();
 
   const handleChange = e => {
@@ -16,7 +16,7 @@ const Chat = ({ reciever }) => {
       reciever: reciever,
       length: e.target.value.length
     };
-    socket.emit("clientWriting", data);
+    window.socket.emit("clientWriting", data);
   };
 
   const handleSubmit = async e => {
@@ -28,7 +28,7 @@ const Chat = ({ reciever }) => {
       message: newMessage
     };
     setNewMessage("");
-    socket.emit("clientNewMessage", data);
+    window.socket.emit("clientNewMessage", data);
 
     // const res = await axios.post("/api/users/addMessage", data);
     // if (res.status === 200) {
@@ -109,7 +109,7 @@ const Chat = ({ reciever }) => {
               >
                 <span
                   style={{
-                    backgroundColor: "grey",
+                    backgroundColor: "lightgrey",
                     borderRadius: 5,
                     minWidth: 100,
                     padding: 10

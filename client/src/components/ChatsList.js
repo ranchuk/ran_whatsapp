@@ -9,11 +9,10 @@ const ChatsList = () => {
   const { chats: chatList, username, chatInView } = state;
 
   useEffect(() => {
-    state.socket.on("clientNewMessage", data => {
+    window.socket.on("clientNewMessage", data => {
       dispatch({ type: "AddMessage", payload: data });
     });
-
-    state.socket.on("clientWriting", data => {
+    window.socket.on("clientWriting", data => {
       dispatch({ type: "someoneWriting", payload: data });
     });
   }, []);
@@ -36,7 +35,12 @@ const ChatsList = () => {
               return (
                 <div
                   className="chatItem"
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                    borderBottom: 1,
+                    borderBottomColor: "black",
+                    borderBottomStyle: "solid"
+                  }}
                   key={index}
                   onClick={e => {
                     dispatch({ type: "ChatInView", payload: item });

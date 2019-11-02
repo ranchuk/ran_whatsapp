@@ -1,43 +1,31 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-// import io from "socket.io-client";
 
-const Login = props => {
+const Register = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = async e => {
     e.preventDefault();
+    alert("An email/sms is sent to you to confirm registration");
     // submit login credentials
-    const res = await axios.post("/api/users/login", {
+    const res = await axios.post("/api/users/register", {
       username,
       password
     });
     if (res.status === 200) {
-      // const socket = io.connect("/");
-      // if (socket !== undefined) {
-      window.socket.emit("join", username);
-      // }
-      dispatch({
-        type: "Login",
-        payload: {
-          username: username,
-          token: 0,
-          chats: res.data.chats
-        }
-      });
-      //after login, redirect to ChatList page
-      props.history.push("/chats");
+      //after login, redirect to Login
+      window.location.replace("/");
     }
   };
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
-      <h1 className="text-center">Ran-Whatsapp</h1>
+      <h1 className="text-center">Sign In</h1>
       <form onSubmit={handleSubmit}>
         <input
-          placeholder="Enter username or email address"
+          placeholder="Enter username"
           onChange={e => setUsername(e.target.value)}
           value={username}
           className="form-control"
@@ -48,19 +36,10 @@ const Login = props => {
           value={password}
           className="form-control"
         ></input>
-        <button type="submit">Log in</button>
-        <button
-          type="submit"
-          onClick={e => {
-            e.preventDefault();
-            window.location.replace("/register");
-          }}
-        >
-          Sign in
-        </button>
+        <button type="submit">Sign in</button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;

@@ -1,6 +1,6 @@
-/* .chatItem:hover {
-  background-color: grey;
-} */
+.chatItem:hover {
+  background-color: lightgrey;
+}
 
 *,
 *::before,

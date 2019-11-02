@@ -54,6 +54,33 @@ router.delete("/chat/delete/:username1/:username2", (req, res) => {
       console.error(err);
     });
 });
+
+router.post("/register", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  //Find user by email
+  User.findOne({ username: username })
+    .then(user => {
+      // Check for user
+      if (user) {
+        return res.status(404).json("User already exist");
+      }
+      const newUser = new User({
+        username: username,
+        password: password
+      });
+
+      newUser
+        .save()
+        .then(user => res.json(user))
+        .catch(err => console.log(err));
+    })
+    .catch(err => {
+      console.error(err);
+    });
+});
+
 // router.post("/chat/addmessage", (req, res) => {
 //   const username1 = req.body.sender;
 //   const username2 = req.body.reciever;

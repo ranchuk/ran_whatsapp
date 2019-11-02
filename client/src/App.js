@@ -2,10 +2,21 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ChatsList from "./components/ChatsList";
 import Login from "./components/Login";
+import Register from "./components/Register";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import "./App.css";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { PersistGate } from "redux-persist/integration/react";
+import io from "socket.io-client";
+
+const persistConfig = {
+  key: "root",
+  storage
+};
+const persistedReducer = persistReducer(persistConfig, appReducer);
 
 const initialState = {
   username: "",
@@ -15,8 +26,17 @@ const initialState = {
 };
 const middleware = [thunk];
 
+window.socket = io.connect("/");
+if (window.socket !== undefined) {
+  if (JSON.parse(localStorage.getItem(localStorage.key(0)))) {
+    const localstorageObj = JSON.parse(
+      localStorage.getItem(localStorage.key(0))
+    );
+    window.socket.emit("join", localstorageObj.username);
+  }
+}
 const store = createStore(
-  appReducer,
+  persistedReducer,
   initialState,
   compose(
     applyMiddleware(...middleware),
@@ -26,6 +46,7 @@ const store = createStore(
       : f => f
   )
 );
+let persistor = persistStore(store);
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
@@ -109,12 +130,15 @@ export const Context = React.createContext();
 const App = () => {
   return (
     <Provider store={store}>
-      <Router>
-        <div className="App">
-          <Route exact path="/" component={Login} />
-          <Route exact path="/chats" component={ChatsList} />
-        </div>
-      </Router>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <div className="App">
+            <Route exact path="/" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/chats" component={ChatsList} />
+          </div>
+        </Router>
+      </PersistGate>
     </Provider>
   );
 };
