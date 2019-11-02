@@ -44,8 +44,12 @@ const ChatsList = () => {
 
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
-      <button onClick={handleLogOut}>Log out</button>
-      <button onClick={() => setShowModal(true)}>Add Contact</button>
+      <Button variant="secondary" onClick={handleLogOut}>
+        Log out
+      </Button>
+      <Button variant="primary" onClick={() => setShowModal(true)}>
+        Add Contact
+      </Button>
       <Modal show={showwModal} onHide={() => setShowModal(false)}>
         <Modal.Header>
           <Modal.Title>Add New Contact</Modal.Title>
@@ -79,7 +83,7 @@ const ChatsList = () => {
               handleAddContact();
             }}
           >
-            Save Changes
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

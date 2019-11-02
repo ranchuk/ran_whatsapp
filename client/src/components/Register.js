@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Button from "react-bootstrap/Button";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -35,7 +36,7 @@ const Register = () => {
           value={password}
           className="form-control"
         ></input>
-        <button type="submit">Sign in</button>
+        <Button type="submit">Sign in</Button>
       </form>
     </div>
   );

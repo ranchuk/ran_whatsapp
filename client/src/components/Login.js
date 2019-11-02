@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import Button from "react-bootstrap/Button";
 
 const Login = props => {
   const [username, setUsername] = useState("");
@@ -47,8 +48,11 @@ const Login = props => {
           value={password}
           className="form-control"
         ></input>
-        <button type="submit">Log in</button>
-        <button
+        <Button variant="primary" type="submit">
+          Log in
+        </Button>
+        <Button
+          variant="secondary"
           type="submit"
           onClick={e => {
             e.preventDefault();
@@ -56,7 +60,7 @@ const Login = props => {
           }}
         >
           Sign in
-        </button>
+        </Button>
       </form>
     </div>
   );
