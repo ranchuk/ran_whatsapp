@@ -14,7 +14,7 @@ const ChatsList = () => {
   const [showwModal, setShowModal] = useState(false);
   const [newContact, setNewContact] = useState("");
   const { chats: chatList, username, chatInView } = state;
-
+  const [errorNewContact, setErrorNewContact] = useState("");
   useEffect(() => {
     window.socket.on("clientNewMessage", data => {
       dispatch({ type: "AddMessage", payload: data });
@@ -31,13 +31,17 @@ const ChatsList = () => {
   };
 
   const handleAddContact = async () => {
-    const res = await axios.post(`/api/users/newContact`, {
-      username,
-      contact: newContact
-    });
-    if (res.status === 200) {
-      console.log(res.data);
-      dispatch({ type: "AddContact", payload: res.data });
+    try {
+      const res = await axios.post(`/api/users/newContact`, {
+        username,
+        contact: newContact
+      });
+      if (res.status === 200) {
+        setShowModal(false);
+        dispatch({ type: "AddContact", payload: res.data });
+      }
+    } catch (e) {
+      setErrorNewContact("User not exist");
     }
   };
 
@@ -46,53 +50,13 @@ const ChatsList = () => {
       <Button variant="secondary" onClick={handleLogOut}>
         Log out
       </Button>
-      <Button variant="primary" onClick={() => setShowModal(true)}>
-        Add Contact
-      </Button>
-      <Modal show={showwModal} onHide={() => setShowModal(false)}>
-        <Modal.Header>
-          <Modal.Title>Add New Contact</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <InputGroup className="mb-3">
-            <FormControl
-              onChange={e => {
-                setNewContact(e.target.value);
-              }}
-              value={newContact}
-              placeholder="Contact Name..."
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-            />
-          </InputGroup>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setShowModal(false);
-            }}
-          >
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => {
-              setShowModal(false);
-              handleAddContact();
-            }}
-          >
-            Save
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <h1>Ran-Whatsapp</h1>
       <div style={{ display: "flex", marginTop: 50 }}>
         <div
           className="form-control"
           style={{
             height: 500,
-            width: 200
+            width: 200,
+            position: "relative"
           }}
         >
           {chatList &&
@@ -121,6 +85,13 @@ const ChatsList = () => {
                 </div>
               );
             })}
+          <Button
+            variant="primary"
+            onClick={() => setShowModal(true)}
+            style={{ position: "absolute", bottom: "0.375rem" }}
+          >
+            Add Contact
+          </Button>
         </div>
         <div
           className="form-control"
@@ -134,6 +105,45 @@ const ChatsList = () => {
           ) : null}
         </div>
       </div>
+      <Modal show={showwModal} onHide={() => setShowModal(false)}>
+        <Modal.Header>
+          <Modal.Title>Add New Contact</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <InputGroup className="mb-3">
+            <FormControl
+              onChange={e => {
+                setNewContact(e.target.value);
+              }}
+              value={newContact}
+              placeholder="Contact Name..."
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+          </InputGroup>
+          <span style={{ color: "red" }}>{errorNewContact}</span>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowModal(false);
+              setErrorNewContact("");
+              setNewContact("");
+            }}
+          >
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleAddContact();
+            }}
+          >
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
