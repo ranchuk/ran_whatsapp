@@ -26,7 +26,7 @@ const ChatsList = () => {
   }, []);
 
   const handleLogOut = () => {
-    localStorage.removeItem("persist:root");
+    sessionStorage.removeItem("persist:root");
     window.location.href = "/";
   };
 
