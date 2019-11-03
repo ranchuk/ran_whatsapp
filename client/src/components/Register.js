@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 
@@ -6,17 +6,17 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
+
   const handleSubmit = async e => {
     e.preventDefault();
-    alert("An email/sms is sent to you to confirm registration");
-    // submit login credentials
     const res = await axios.post("/api/users/register", {
       username,
       password
     });
     if (res.status === 200) {
-      //after login, redirect to Login
-      localStorage.removeItem("persist:root");
       window.location.replace("/");
     }
   };

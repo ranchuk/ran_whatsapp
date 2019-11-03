@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import Contacts from "./Contacts";
 
 const ChatsList = () => {
   const dispatch = useDispatch();
@@ -13,20 +14,20 @@ const ChatsList = () => {
   const [reciever, setReciever] = useState("");
   const [showwModal, setShowModal] = useState(false);
   const [newContact, setNewContact] = useState("");
-  const { chats: chatList, username, chatInView } = state;
+  const { username } = state;
   const [errorNewContact, setErrorNewContact] = useState("");
   useEffect(() => {
     window.socket.on("clientNewMessage", data => {
       dispatch({ type: "AddMessage", payload: data });
     });
     window.socket.on("clientWriting", data => {
-      console.log(data);
       dispatch({ type: "someoneWriting", payload: data });
     });
   }, []);
 
   const handleLogOut = () => {
-    sessionStorage.removeItem("persist:root");
+    sessionStorage.clear();
+
     window.location.href = "/";
   };
 
@@ -51,59 +52,8 @@ const ChatsList = () => {
         Log out
       </Button>
       <div style={{ display: "flex", marginTop: 50 }}>
-        <div
-          className="form-control"
-          style={{
-            height: 500,
-            width: 200,
-            position: "relative"
-          }}
-        >
-          {chatList &&
-            chatList.map((item, index) => {
-              const reciever =
-                item.username1 !== username ? item.username1 : item.username2;
-              return (
-                <div
-                  className="chatItem"
-                  style={{
-                    cursor: "pointer",
-                    borderBottom: 1,
-                    borderBottomColor: "black",
-                    borderBottomStyle: "solid"
-                  }}
-                  key={index}
-                  onClick={e => {
-                    dispatch({
-                      type: "ChatInView",
-                      payload: { ...item, reciever }
-                    });
-                    setReciever(reciever);
-                  }}
-                >
-                  <span>{reciever}</span>
-                </div>
-              );
-            })}
-          <Button
-            variant="primary"
-            onClick={() => setShowModal(true)}
-            style={{ position: "absolute", bottom: "0.375rem" }}
-          >
-            Add Contact
-          </Button>
-        </div>
-        <div
-          className="form-control"
-          style={{
-            height: 500,
-            width: 700
-          }}
-        >
-          {Object.keys(chatInView).length > 0 ? (
-            <Chat reciever={reciever} />
-          ) : null}
-        </div>
+        <Contacts setReciever={setReciever} setShowModal={setShowModal} />
+        <Chat reciever={reciever} />
       </div>
       <Modal show={showwModal} onHide={() => setShowModal(false)}>
         <Modal.Header>

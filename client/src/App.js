@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import ChatsList from "./components/ChatsList";
+import ChatsList from "./components/HomePage";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { createStore, applyMiddleware, compose } from "redux";
