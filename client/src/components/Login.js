@@ -34,8 +34,10 @@ const Login = props => {
   };
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
-      <h1 className="text-center">Ran-Whatsapp</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 className="text-center" style={{ marginTop: 40 }}>
+        Ran-Whatsapp
+      </h1>
+      <form onSubmit={handleSubmit} className="loginForm">
         <input
           placeholder="Enter username or email address"
           onChange={e => setUsername(e.target.value)}
@@ -48,19 +50,21 @@ const Login = props => {
           value={password}
           className="form-control"
         ></input>
-        <Button variant="primary" type="submit">
-          Log in
-        </Button>
-        <Button
-          variant="secondary"
-          type="submit"
-          onClick={e => {
-            e.preventDefault();
-            window.location.replace("/register");
-          }}
-        >
-          Sign in
-        </Button>
+        <div className="loginButtons">
+          <Button className="logInButton" variant="primary" type="submit">
+            Log in
+          </Button>
+          <Button
+            variant="secondary"
+            type="submit"
+            onClick={e => {
+              e.preventDefault();
+              window.location.replace("/register");
+            }}
+          >
+            Sign in
+          </Button>
+        </div>
       </form>
     </div>
   );

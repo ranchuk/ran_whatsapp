@@ -2,7 +2,12 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 
-const Contacts = ({ setShowModal, setReciever }) => {
+const Contacts = ({
+  setNewContactModal,
+  setShowEditModal,
+  setReciever,
+  setChatInEdit
+}) => {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
   const { chats: chatList, username } = state;
@@ -22,29 +27,49 @@ const Contacts = ({ setShowModal, setReciever }) => {
             item.username1 !== username ? item.username1 : item.username2;
           return (
             <div
-              className="chatItem"
+              key={index}
               style={{
-                cursor: "pointer",
+                display: "flex",
+                justifyContent: "space-between",
                 borderBottom: 1,
                 borderBottomColor: "black",
                 borderBottomStyle: "solid"
               }}
-              key={index}
-              onClick={e => {
-                dispatch({
-                  type: "ChatInView",
-                  payload: { ...item, reciever }
-                });
-                setReciever(reciever);
-              }}
             >
-              <span>{reciever}</span>
+              <div
+                className="contactItem"
+                style={{
+                  cursor: "pointer"
+                }}
+                key={index}
+                onClick={e => {
+                  dispatch({
+                    type: "ChatInView",
+                    payload: { ...item, reciever }
+                  });
+                  setReciever(reciever);
+                }}
+              >
+                <span>{reciever}</span>
+              </div>
+              <div
+                className="editItem"
+                style={{
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  setShowEditModal(true);
+                  setChatInEdit(item);
+                }}
+              >
+                . . .
+              </div>
             </div>
           );
         })}
       <Button
         variant="primary"
-        onClick={() => setShowModal(true)}
+        onClick={() => setNewContactModal(true)}
         style={{ position: "absolute", bottom: "0.375rem" }}
       >
         Add Contact

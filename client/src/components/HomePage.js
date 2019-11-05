@@ -12,9 +12,11 @@ const ChatsList = () => {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
   const [reciever, setReciever] = useState("");
-  const [showwModal, setShowModal] = useState(false);
+  const [showNewContactModal, setNewContactModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [chatInEdit, setChatInEdit] = useState("");
   const [newContact, setNewContact] = useState("");
-  const { username } = state;
+  const { username, chatInView } = state;
   const [errorNewContact, setErrorNewContact] = useState("");
   useEffect(() => {
     window.socket.on("clientNewMessage", data => {
@@ -38,12 +40,39 @@ const ChatsList = () => {
         contact: newContact
       });
       if (res.status === 200) {
-        setShowModal(false);
+        setNewContactModal(false);
         dispatch({ type: "AddContact", payload: res.data });
       }
     } catch (e) {
       setErrorNewContact("User not exist");
     }
+  };
+  const handleDelete = async e => {
+    const res = await axios.delete(
+      `/api/users/chat/delete/${chatInEdit.username1}/${chatInEdit.username2}`
+    );
+    if (res.status === 200) {
+      const reciever =
+        chatInEdit.username1 !== username
+          ? chatInEdit.username1
+          : chatInEdit.username2;
+      dispatch({
+        type: "DeleteChat",
+        payload: {
+          reciever: reciever
+        }
+      });
+      if (chatInEdit._id === chatInView._id) {
+        dispatch({
+          type: "ChatInView",
+          payload: {
+            ...chatInView,
+            chat: []
+          }
+        });
+      }
+    }
+    setShowEditModal(false);
   };
 
   return (
@@ -52,10 +81,18 @@ const ChatsList = () => {
         Log out
       </Button>
       <div style={{ display: "flex", marginTop: 50 }}>
-        <Contacts setReciever={setReciever} setShowModal={setShowModal} />
+        <Contacts
+          setReciever={setReciever}
+          setNewContactModal={setNewContactModal}
+          setShowEditModal={setShowEditModal}
+          setChatInEdit={setChatInEdit}
+        />
         <Chat reciever={reciever} />
       </div>
-      <Modal show={showwModal} onHide={() => setShowModal(false)}>
+      <Modal
+        show={showNewContactModal}
+        onHide={() => setNewContactModal(false)}
+      >
         <Modal.Header>
           <Modal.Title>Add New Contact</Modal.Title>
         </Modal.Header>
@@ -77,7 +114,7 @@ const ChatsList = () => {
           <Button
             variant="secondary"
             onClick={() => {
-              setShowModal(false);
+              setNewContactModal(false);
               setErrorNewContact("");
               setNewContact("");
             }}
@@ -92,6 +129,20 @@ const ChatsList = () => {
           >
             Save
           </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+        <Modal.Header>
+          <Modal.Title>Contact setting</Modal.Title>
+        </Modal.Header>
+        <Modal.Body></Modal.Body>
+        <Modal.Footer>
+          <button
+            className="form-control btn btn-danger"
+            onClick={handleDelete}
+          >
+            Delete All Messages In Chat
+          </button>
         </Modal.Footer>
       </Modal>
     </div>

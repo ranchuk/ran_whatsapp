@@ -23,7 +23,7 @@ const Register = () => {
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
       <h1 className="text-center">Sign In</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="loginForm">
         <input
           placeholder="Enter username"
           onChange={e => setUsername(e.target.value)}
@@ -36,7 +36,38 @@ const Register = () => {
           value={password}
           className="form-control"
         ></input>
-        <Button type="submit">Sign in</Button>
+        {
+          //TODO - SIGN IN with email/phone + email/phone confiramtion
+          // OR
+          // <input
+          //   placeholder="Enter your email"
+          //   onChange={e => setUsername(e.target.value)}
+          //   value={username}
+          //   className="form-control"
+          // ></input>
+          // OR
+          // <input
+          //   placeholder="Enter your phone number"
+          //   onChange={e => setUsername(e.target.value)}
+          //   value={username}
+          //   className="form-control"
+          // ></input>
+        }
+        <div className="loginButtons">
+          <Button className="logInButton" type="submit">
+            Sign in
+          </Button>
+          <Button
+            variant="secondary"
+            type="submit"
+            onClick={e => {
+              e.preventDefault();
+              window.location.replace("/");
+            }}
+          >
+            Login in
+          </Button>
+        </div>
       </form>
     </div>
   );

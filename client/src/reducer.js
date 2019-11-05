@@ -47,7 +47,7 @@ function appReducer(state, action) {
     case "ChatInView": {
       return { ...state, chatInView: action.payload };
     }
-    case "DeleteChatTemporary": {
+    case "DeleteChat": {
       const { reciever } = action.payload;
       const newChats = JSON.parse(JSON.stringify(state.chats));
       state.chats.forEach((chat, index) => {

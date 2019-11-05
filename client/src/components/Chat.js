@@ -36,42 +36,43 @@ const Chat = ({ reciever }) => {
     // }
   };
 
-  const handleDelete = async e => {
-    e.preventDefault();
-    const res = await axios.delete(
-      `/api/users/chat/delete/${chatInView.username1}/${chatInView.username2}`
-    );
-    if (res.status === 200) {
-      dispatch({
-        type: "ChatInView",
-        payload: {
-          ...chatInView,
-          chat: []
-        }
-      });
-      dispatch({
-        type: "DeleteChatTemporary",
-        payload: {
-          reciever: reciever
-        }
-      });
-    }
-  };
+  // const handleDelete = async e => {
+  //   e.preventDefault();
+  //   const res = await axios.delete(
+  //     `/api/users/chat/delete/${chatInView.username1}/${chatInView.username2}`
+  //   );
+  //   if (res.status === 200) {
+  //     dispatch({
+  //       type: "ChatInView",
+  //       payload: {
+  //         ...chatInView,
+  //         chat: []
+  //       }
+  //     });
+  //     dispatch({
+  //       type: "DeleteChat",
+  //       payload: {
+  //         reciever: reciever
+  //       }
+  //     });
+  //   }
+  // };
 
   return (
     <div
-      className="form-control"
       style={{
         height: 500,
-        width: 700
+        width: 700,
+        position: "relative"
       }}
     >
       <div
         id="chat"
+        className="form-control"
         style={{
           width: "100%",
           height: "100%",
-          position: "relative"
+          paddingBottom: 50
         }}
       >
         <div
@@ -80,7 +81,8 @@ const Chat = ({ reciever }) => {
             width: "100%",
             height: "100%",
             paddingRight: 10,
-            paddingTop: 20
+            paddingTop: 20,
+            paddingBottom: 20
           }}
         >
           {Object.keys(chatInView).length > 0 &&
@@ -132,36 +134,36 @@ const Chat = ({ reciever }) => {
             })}
           {chatInView.isWriting ? `${chatInView.reciever} is writing...` : null}
         </div>
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            display: "flex",
-            position: "absolute",
-            bottom: 0,
-            width: "100%"
-          }}
-        >
-          <input
-            placeholder="Enter Your Message..."
-            className="form-control"
-            onChange={handleChange}
-            value={newMessage}
-          />
-          <button
-            className="form-control btn btn-primary"
-            style={{ width: "20%" }}
-          >
-            Send
-          </button>
-          <button
-            className="form-control btn btn-danger"
-            style={{ width: "20%" }}
-            onClick={handleDelete}
-          >
-            Delete Messages
-          </button>
-        </form>
       </div>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          position: "absolute",
+          bottom: 0,
+          width: "100%"
+        }}
+      >
+        <input
+          placeholder="Enter Your Message..."
+          className="form-control"
+          onChange={handleChange}
+          value={newMessage}
+        />
+        <button
+          className="form-control btn btn-primary"
+          style={{ width: "20%" }}
+        >
+          Send
+        </button>
+        {/**<button
+          className="form-control btn btn-danger"
+          style={{ width: "20%" }}
+          onClick={handleDelete}
+        >
+          Delete Messages
+        </button>**/}
+      </form>
     </div>
   );
 };

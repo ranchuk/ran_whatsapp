@@ -1,4 +1,5 @@
-.chatItem:hover {
+.contactItem:hover,
+.editItem:hover {
   background-color: lightgrey;
 }
 
@@ -12,4 +13,17 @@
 
 .body {
   font-family: "Roboto", sans-serif;
+}
+.loginForm {
+  margin-top: 40px;
+}
+.loginForm .form-control {
+  margin-bottom: 10px;
+}
+.loginButtons {
+  margin-top: 20px;
+  text-align: center;
+}
+.loginButtons .logInButton {
+  margin-right: 20px;
 }

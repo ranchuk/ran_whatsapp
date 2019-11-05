@@ -8,7 +8,9 @@ const Chat = require("../../config/models/chat");
 router.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-
+  if (username === "" || password === "") {
+    return res.status(404).json("User not found");
+  }
   //Find user by email
   User.findOne({ username: username })
     .then(user => {
