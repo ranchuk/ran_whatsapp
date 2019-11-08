@@ -18,7 +18,7 @@ const Login = props => {
     if (res.status === 200) {
       // const socket = io.connect("/");
       // if (socket !== undefined) {
-      window.socket.emit("join", username);
+      window.socket.emit("join", { username, chats: res.data.chats });
       // }
       dispatch({
         type: "Login",

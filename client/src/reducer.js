@@ -7,6 +7,25 @@ function appReducer(state, action) {
         chats: action.payload.chats
       };
     }
+    case "OnlineStatus": {
+      //TODO update user in chat status
+      const { username, status } = action.payload;
+      console.log(action.payload.username);
+      const newChats = JSON.parse(JSON.stringify(state.chats));
+
+      state.chats.forEach((chat, index) => {
+        if (chat.username1 === username || chat.username2 === username) {
+          newChats[index].isOnline = status === "online" ? true : false;
+          return;
+        }
+      });
+
+      console.log(newChats);
+      return {
+        ...state,
+        chats: newChats
+      };
+    }
     case "AddMessage": {
       const { reciever, sender } = action.payload;
       // console.log({ reciever, sender });

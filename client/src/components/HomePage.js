@@ -25,11 +25,19 @@ const ChatsList = () => {
     window.socket.on("clientWriting", data => {
       dispatch({ type: "someoneWriting", payload: data });
     });
+    window.socket.on("online_status", data => {
+      dispatch({ type: "OnlineStatus", payload: data });
+    });
   }, []);
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
     sessionStorage.clear();
-
+    // const res = await axios.post(`/api/users/lgout`, {
+    //   username
+    // });
+    //  if (res.status === 200) {
+    //    window.location.href = "/";
+    //   }
     window.location.href = "/";
   };
 

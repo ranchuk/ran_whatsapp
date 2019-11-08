@@ -10,11 +10,13 @@ const keys = require("./config/keys/keys");
 //Body parser middleware
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
-
+let connections = [];
+module.exports.getConnections = () => connections;
 const users = require("./routes/api/users");
+
 // Use Routes
 app.use("/api/users", users);
-const connections = [];
+
 // Connect to mongo
 mongoose.connect(
   keys.mongoURI,
@@ -27,18 +29,40 @@ mongoose.connect(
       throw err;
     }
     client.on("connection", socket => {
-      // console.log(socket);
-      connections.push(socket.id);
-      console.log({ connections });
+      socket.on("join", function(user) {
+        connections.forEach(item => {
+          client
+            .to(item.username)
+            .emit("online_status", {
+              username: user.username,
+              status: "online"
+            });
+        });
+        connections.push({ username: user.username, id: socket.id });
+        socket.join(user.username);
 
-      socket.on("join", function(username) {
-        console.log("join", { username });
-        socket.join(username);
+        console.log(connections);
       });
       socket.on("disconnect", () => {
-        const index = connections.indexOf(socket.id);
-        connections.splice(index, 1);
-        console.log({ connections });
+        let diconnectedUsername = "";
+        connections = connections.filter(item => {
+          if (item.id.toString().trim() === socket.id.toString().trim()) {
+            diconnectedUsername = item.username;
+            return false;
+          } else {
+            return true;
+          }
+        });
+
+        connections.forEach(item => {
+          client
+            .to(item.username)
+            .emit("online_status", {
+              username: diconnectedUsername,
+              status: "offline"
+            });
+        });
+        console.log(connections);
       });
 
       socket.on("clientWriting", function(data) {

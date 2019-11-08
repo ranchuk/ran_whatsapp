@@ -25,6 +25,7 @@ const Contacts = ({
         chatList.map((item, index) => {
           const reciever =
             item.username1 !== username ? item.username1 : item.username2;
+          const isOnline = item.isOnline ? "online" : "offline";
           return (
             <div
               key={index}
@@ -50,7 +51,7 @@ const Contacts = ({
                   setReciever(reciever);
                 }}
               >
-                <span>{reciever}</span>
+                <span className={`${isOnline}`}>{reciever}</span>
               </div>
               <div
                 className="editItem"

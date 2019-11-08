@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const getConnections = require("../../server").getConnections;
 
 // Load User model
 const User = require("../../config/models/user");
@@ -22,7 +23,19 @@ router.post("/login", (req, res) => {
         $or: [{ username1: username }, { username2: username }]
       })
         .then(chats => {
-          res.json({ success: true, chats: chats });
+          const connections = getConnections();
+          const newChats = chats.map(chat => {
+            const isUserOnline = connections.find(
+              connection =>
+                connection.username === chat.username1 ||
+                connection.username === chat.username2
+            );
+            chat = JSON.parse(JSON.stringify(chat));
+            chat.isOnline = isUserOnline ? true : false;
+
+            return chat;
+          });
+          res.json({ success: true, chats: newChats });
         })
         .catch(err => {
           console.error(err);
