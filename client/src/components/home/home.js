@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Chat from "./Chat";
+import Chat from "../chat/chat";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import Contacts from "./Contacts";
-
-const ChatsList = () => {
+import Contacts from "../contacts/contacts";
+// import AddContact from '../addContact/addContact';
+const Home = () => {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
   const [reciever, setReciever] = useState("");
@@ -30,31 +30,20 @@ const ChatsList = () => {
     });
   }, []);
 
-  const handleLogOut = async () => {
-    sessionStorage.clear();
-    // const res = await axios.post(`/api/users/lgout`, {
-    //   username
-    // });
-    //  if (res.status === 200) {
-    //    window.location.href = "/";
-    //   }
-    window.location.href = "/";
-  };
-
-  const handleAddContact = async () => {
-    try {
-      const res = await axios.post(`/api/users/newContact`, {
-        username,
-        contact: newContact
-      });
-      if (res.status === 200) {
-        setNewContactModal(false);
-        dispatch({ type: "AddContact", payload: res.data });
-      }
-    } catch (e) {
-      setErrorNewContact("User not exist");
-    }
-  };
+  // const handleAddContact = async () => {
+  //   try {
+  //     const res = await axios.post(`/api/users/newContact`, {
+  //       username,
+  //       contact: newContact
+  //     });
+  //     if (res.status === 200) {
+  //       setNewContactModal(false);
+  //       dispatch({ type: "AddContact", payload: res.data });
+  //     }
+  //   } catch (e) {
+  //     setErrorNewContact("User not exist");
+  //   }
+  // };
   const handleDelete = async e => {
     const res = await axios.delete(
       `/api/users/chat/delete/${chatInEdit.username1}/${chatInEdit.username2}`
@@ -84,63 +73,18 @@ const ChatsList = () => {
   };
 
   return (
-    <div className="col-md-6 offset-md-3 col-sm-12">
-      <Button variant="secondary" onClick={handleLogOut}>
-        Log out
-      </Button>
-      <div style={{ display: "flex", marginTop: 50 }}>
+    <div className="home">
         <Contacts
           setReciever={setReciever}
           setNewContactModal={setNewContactModal}
           setShowEditModal={setShowEditModal}
           setChatInEdit={setChatInEdit}
         />
-        <Chat reciever={reciever} />
-      </div>
-      <Modal
-        show={showNewContactModal}
-        onHide={() => setNewContactModal(false)}
-      >
-        <Modal.Header>
-          <Modal.Title>Add New Contact</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <InputGroup className="mb-3">
-            <FormControl
-              onChange={e => {
-                setNewContact(e.target.value);
-              }}
-              value={newContact}
-              placeholder="Contact Name..."
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-            />
-          </InputGroup>
-          <span style={{ color: "red" }}>{errorNewContact}</span>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setNewContactModal(false);
-              setErrorNewContact("");
-              setNewContact("");
-            }}
-          >
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => {
-              handleAddContact();
-            }}
-          >
-            Save
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <Chat reciever={reciever} showEditModal={showEditModal} setShowEditModal={setShowEditModal} setChatInEdit={setChatInEdit} item={chatInView} />
+        {/* <AddContact showNewContactModal={showNewContactModal} setNewContactModal={setNewContactModal} /> */}
+ 
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
-        <Modal.Header>
+      <Modal.Header>
           <Modal.Title>Contact setting</Modal.Title>
         </Modal.Header>
         <Modal.Body></Modal.Body>
@@ -157,4 +101,4 @@ const ChatsList = () => {
   );
 };
 
-export default ChatsList;
+export default Home;

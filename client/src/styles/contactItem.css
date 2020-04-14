@@ -1,0 +1,104 @@
+.contactItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: white;
+  margin: 0.5px 0rem 0.5px 0rem;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contactItem_name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: left;
+      -ms-flex-align: left;
+          align-items: left;
+  margin-left: 15px;
+}
+
+.contactItem_name_message {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 10rem;
+  height: 1.8rem;
+  overflow-y: hidden;
+}
+
+.contactItem_name_time {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contactItem_name_time_name {
+  font-weight: 600;
+}
+
+.contactItem_name_time_time {
+  color: lightgray;
+  font-weight: 500;
+  font-size: 0.7rem;
+}
+
+.contactItem_edit {
+  margin-right: 0px;
+}
+
+.contactItem_edit_icon {
+  color: #516abb;
+}
+
+.contactItem_image {
+  position: relative;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.contactItem_image_isOnline {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: #2eb82e;
+}
+
+.contactItem_image_isOffline {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: grey;
+  border: 1px solid gray;
+}
+
+.contactItem:hover {
+  background-color: #e0e4f3;
+  cursor: pointer;
+}
+/*# sourceMappingURL=contactItem.css.map */

@@ -1,6 +1,15 @@
-.contactItem:hover,
-.editItem:hover {
-  background-color: lightgrey;
+@import './styles/navBar.css';
+@import './styles/home.css';
+@import './styles/contacts.css';
+@import './styles/contactItem.css';
+@import './styles/chat.css';
+@import './styles/message.css';
+@import './styles/addContact.css';
+
+
+::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
 *,
@@ -9,6 +18,28 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-size: 62.5%;
+  padding: 2.5rem;
+  background-color:white;
+  height:100vh;
+}
+.MainLayout {
+  display: flex;
+  height: 100%;
+  width:100%;
+}
+
+.MainContainer{
+  width:100%;
+  height:100%;
+  background-color: rgb(224, 228, 243);
+}
+/* .contactItem:hover,
+.editItem:hover {
+  background-color: lightgrey;
 }
 
 .body {
@@ -45,4 +76,4 @@
   border-radius: 50%;
   display: inline-block;
   margin-right: 5px;
-}
+} */

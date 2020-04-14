@@ -1,0 +1,90 @@
+.chat {
+  position: relative;
+  width: 100%;
+  background-color: #e0e4f3;
+  height: 100%;
+  width: 100%;
+  min-width: 17rem;
+}
+
+.chat_header {
+  background-color: white;
+  height: 4rem;
+  margin-bottom: 1px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.chat_header_name {
+  font-size: 2rem;
+  margin-left: 2rem;
+}
+
+.chat_header_edit {
+  cursor: pointer;
+  margin-right: 2rem;
+}
+
+.chat_messages {
+  background-color: white;
+  padding: 1rem;
+  overflow-y: scroll;
+  height: 85%;
+}
+
+.chat_messages ::-webkit-scrollbar {
+  width: 0px;
+}
+
+.chat_input_wrapper {
+  border-top: 1px solid #e0e4f3;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+}
+
+.chat_input_input {
+  height: 2rem;
+  width: 100%;
+  padding: 2rem;
+  font-size: 1.1rem;
+  font-weight: 400;
+  border: none;
+}
+
+.chat_input_input:focus {
+  outline: none;
+}
+
+.chat_input_button {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  height: 100%;
+  width: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.chat_input_button:hover {
+  cursor: pointer;
+}
+
+.chat_input_button_arrow {
+  color: #516abb;
+}
+/*# sourceMappingURL=chat.css.map */

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import ChatsList from "./components/HomePage";
+import Home from "./components/home/home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { createStore, applyMiddleware, compose } from "redux";
@@ -12,6 +12,9 @@ import storage from "redux-persist/lib/storage/session";
 import { PersistGate } from "redux-persist/integration/react";
 import io from "socket.io-client";
 import appReducer from "./reducer";
+import PrivateRoute from './common/privateRoute';
+import NavBar from './common/navBar/navBar';
+
 const persistConfig = {
   key: "root",
   storage
@@ -34,7 +37,7 @@ if (window.socket !== undefined) {
     window.socket.emit("join", data.username.replace(/['"]+/g, ""));
   }
 } else {
-  window.location.href = "/";
+  window.location.href = "/login";
 }
 
 const store = createStore(
@@ -57,10 +60,13 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Router>
-          <div className="App">
-            <Route exact path="/" component={Login} />
+          <div className="MainLayout">
+            <NavBar />
+            <div className="MainContainer">
+            <PrivateRoute exact path="/" component={Home} auth={{isAuthenticated: true}}/>
             <Route exact path="/register" component={Register} />
-            <Route exact path="/chats" component={ChatsList} />
+            <Route exact path="/login" component={Login} />
+            </div>
           </div>
         </Router>
       </PersistGate>

@@ -1,0 +1,75 @@
+.chat {
+    position: relative;
+    width:100%;
+    background-color: #e0e4f3;    
+    height:100%;
+    width:100%;
+    min-width:17rem;
+    &_header {
+        background-color:white;    
+        height:4rem;
+        margin-bottom:1px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &_name {
+            font-size: 2rem;
+            margin-left: 2rem;
+
+        }
+        &_edit {
+            cursor: pointer;
+            margin-right: 2rem;
+        }
+    }
+    &_messages{
+        background-color:white;    
+
+        padding:1rem;
+        overflow-y: scroll;
+        ::-webkit-scrollbar {
+            width: 0px; 
+        }
+        height:85%;
+    }
+    &_input {
+
+        &_wrapper {
+            border-top: 1px solid #e0e4f3;
+            position: absolute;
+            width:100%;
+            bottom: 0px;
+        }
+        &_input {
+            height:2rem;
+            width:100%;
+            padding:2rem;
+            font-size: 1.1rem;
+            font-weight: 400;
+            border: none;
+            &:focus {
+                outline: none;
+
+            }
+        }
+
+        &_button {
+            position: absolute;
+            bottom: 0px;
+            right:0px;
+            height:100%;
+            width:5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &_arrow{
+                color: #516abb;
+            }
+        }
+    }
+}

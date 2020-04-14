@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AACA,AAAA,mBAAmB,CAAA;EACf,gBAAgB,EAAC,OAAO;CAC3B;;AACD,AAAA,wBAAwB,CAAA;EACpB,OAAO,EAAE,IAAI;EACb,SAAS,EAAE,MAAM;EACjB,MAAM,EAAE,mBAAmB;EAE3B,MAAM,EAAE,OAAO;CAOlB;;AAZD,AAMI,wBANoB,AAMnB,MAAM,CAAC;EACJ,gBAAgB,EAAC,OAAO;CAC3B;;AARL,AASI,wBAToB,AASnB,MAAM,CAAC;EACJ,gBAAgB,EAAC,KAAK;CACzB",
+    "sources": [
+        "../components/addContact/addContact.scss"
+    ],
+    "names": [],
+    "file": "addContact.css"
+}

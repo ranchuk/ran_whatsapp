@@ -1,0 +1,77 @@
+.contactItem {
+    display: flex;
+    padding:1rem;
+    font-size: 1rem;
+    background-color:white;
+    margin: 0.5px 0rem 0.5px 0rem;
+    justify-content: space-between;
+    align-items: center;
+    &_name {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: left;
+        margin-left: 15px;
+
+        &_message {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width:10rem;
+            height: 1.8rem;
+            overflow-y: hidden;
+        }
+
+        &_time{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            &_name{
+                font-weight: 600;
+            }
+            &_time {
+                color:lightgray;
+                font-weight: 500;
+                font-size: 0.7rem;
+            }
+        }
+    }
+    &_edit{
+        margin-right: 0px;
+
+        &_icon {
+            color: #516abb;
+        }
+    } 
+    &_image {
+        position: relative;
+        border-radius: 50%;
+        width:50px;
+        height:50px;
+
+        &_isOnline {
+            position: absolute;
+            right: 5%;
+            bottom: 5%;
+            border-radius: 50%;
+            width:12px;
+            height:12px;
+            background-color:rgb(46, 184, 46);
+        }
+        &_isOffline {
+            position: absolute;
+            right: 5%;
+            bottom: 5%;
+            border-radius: 50%;
+            width:12px;
+            height:12px;
+            background-color:grey;
+            border: 1px solid gray;
+
+        }
+    }
+    &:hover {
+        background-color: rgb(224, 228, 243);
+        cursor: pointer;
+    }
+
+}

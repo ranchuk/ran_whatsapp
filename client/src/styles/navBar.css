@@ -1,0 +1,94 @@
+#root {
+  height: 100%;
+}
+
+.nav {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  min-width: 11rem;
+  font-size: 1.2rem;
+  font-weight: 300;
+  background-color: #516abb;
+  height: 100%;
+  color: #ffffff;
+  padding-top: 2rem;
+}
+
+.nav_icon:hover {
+  background-color: none;
+}
+
+.nav_links {
+  height: 20rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.nav_logout {
+  position: absolute;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  bottom: 2%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 1rem;
+  font-weight: 400;
+  color: lightgrey;
+}
+
+.nav_logout_icon {
+  margin-right: 0.5rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.center_box {
+  color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: left;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.center_box:hover {
+  background-color: #e0e4f3;
+}
+
+.selectedLink {
+  background-color: #e0e4f3;
+}
+/*# sourceMappingURL=navBar.css.map */

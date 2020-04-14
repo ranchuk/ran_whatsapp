@@ -29,7 +29,7 @@ const Login = props => {
         }
       });
       //after login, redirect to ChatList page
-      props.history.push("/chats");
+      props.history.push("/");
     }
   };
   return (

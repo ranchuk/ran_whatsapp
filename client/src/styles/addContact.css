@@ -1,0 +1,19 @@
+.add_contact_search {
+  background-color: #e0e4f3;
+}
+
+.add_contact_search_item {
+  padding: 1rem;
+  font-size: 1.3rem;
+  border: 1px solid lightgray;
+  cursor: pointer;
+}
+
+.add_contact_search_item:hover {
+  background-color: #ffffff;
+}
+
+.add_contact_search_item:focus {
+  background-color: white;
+}
+/*# sourceMappingURL=addContact.css.map */

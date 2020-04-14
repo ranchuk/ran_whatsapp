@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const getConnections = require("../../server").getConnections;
+const getConnections = require("../../socket").getConnections;
 
 // Load User model
 const User = require("../../config/models/user");
@@ -12,6 +12,7 @@ router.post("/login", (req, res) => {
   if (username === "" || password === "") {
     return res.status(404).json("User not found");
   }
+  // console.log({username, password})
   //Find user by email
   User.findOne({ username: username })
     .then(user => {
@@ -44,6 +45,14 @@ router.post("/login", (req, res) => {
     .catch(err => {
       console.error(err);
     });
+});
+
+router.post("/logout", (req, res) => {
+  const username = req.body.username;
+
+  // const connections = getConnections();
+  // connections.filter(connection =>connection.username === chat.username1);
+  res.json({ success: true });
 });
 
 router.delete("/chat/delete/:username1/:username2", (req, res) => {
@@ -114,7 +123,7 @@ router.post("/newContact", (req, res) => {
         ]
       })
         .then(chat => {
-          console.log(chat);
+          // console.log(chat);
           if (chat.length !== 0) {
             return res.status(404).json("Chat already exist");
           }
@@ -136,6 +145,27 @@ router.post("/newContact", (req, res) => {
     .catch(err => {
       console.error(err);
     });
+});
+
+
+router.get("/searchUser", async (req, res) => {
+  const { query } = req.query;
+
+  //Find user by email
+  try{
+    const users = await User.find({ username: { "$regex": query, "$options": "i" } })
+    if (!users) {
+      return res.status(200).json("User not exist");
+    }
+    else{
+      const results = JSON.parse(JSON.stringify(users));
+      return res.status(200).json({success: true, results});
+
+    }
+  }
+  catch(e){
+    return res.status(404).json(e.message);
+  }
 });
 // router.post("/chat/addmessage", (req, res) => {
 //   const username1 = req.body.sender;
