@@ -55,7 +55,6 @@ client.on("connection", socket => {
       const username1 = data.sender;
       const username2 = data.reciever;
       data.time = new Date()
-      console.log(data)
       client.to(data.reciever).emit("clientWriting", { length: 0 });
       Chat.find({
         $or: [

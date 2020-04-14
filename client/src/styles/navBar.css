@@ -12,11 +12,11 @@
       -ms-flex-direction: column;
           flex-direction: column;
   min-width: 11rem;
-  font-size: 1.2rem;
-  font-weight: 300;
+  font-size: 1rem;
+  font-weight: 400;
   background-color: #516abb;
   height: 100%;
-  color: #ffffff;
+  color: #e2e0e0;
   padding-top: 2rem;
 }
 
@@ -49,10 +49,8 @@
           align-items: center;
   bottom: 2%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  font-size: 1rem;
-  font-weight: 400;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
   color: lightgrey;
 }
 
@@ -66,6 +64,7 @@ a {
 
 a:hover {
   text-decoration: none;
+  background-color: #e0e4f3;
 }
 
 .center_box {
@@ -73,19 +72,17 @@ a:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  text-align: left;
-  padding: 0.5rem;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  margin-left: 1rem;
+  margin-left: 2.8rem;
+  margin-bottom: 1rem;
   cursor: pointer;
 }
 
-.center_box:hover {
-  background-color: #e0e4f3;
+.center_box .icon_text .text {
+  margin-left: 0.6rem;
 }
 
 .selectedLink {

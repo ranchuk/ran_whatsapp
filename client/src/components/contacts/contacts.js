@@ -1,7 +1,10 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ContactItem from '../contactItem/contactItem'
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
+import * as _ from 'lodash';
+const sortByDate = require('../../utils').sortByDate;
+
 const Contacts = ({
   setShowEditModal,
   setReciever,
@@ -9,6 +12,9 @@ const Contacts = ({
 }) => {
   const state = useSelector(state => state);
   const { chats: chatList, username } = state;
+
+  let chatListCopy = _.cloneDeep(chatList)
+  sortByDate(chatListCopy)
 
   return (
     <div className="contacts">
@@ -19,8 +25,8 @@ const Contacts = ({
         </div>
       </div>
       <div className="contacts_list">
-      {chatList &&
-        chatList.map((item, index) => {
+      {chatListCopy &&
+        chatListCopy.map((item, index) => {
           const reciever =
             item.username1 !== username ? item.username1 : item.username2;
           const isOnline = item.isOnline ? true : false;

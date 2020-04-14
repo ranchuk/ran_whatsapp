@@ -7,11 +7,11 @@
     display: flex;
     flex-direction: column;
     min-width:11rem;
-    font-size: 1.2rem;
-    font-weight: 300;
+    font-size: 1rem;
+    font-weight: 400;
     background-color: rgb(81, 106, 187);
     height: 100%;
-    color: #ffffff;
+    color: #e2e0e0;
     padding-top:2rem;
 
     &_icon {
@@ -24,7 +24,6 @@
         height:20rem;
         display: flex;
         flex-direction: column;
-        // justify-content: space-evenly;
     }
     &_logout {
         position: absolute;
@@ -34,14 +33,11 @@
         align-items: center;
         bottom: 2%;
         left:50%;
-        transform: translate(-50%, -50%);
-        font-size: 1rem;
-        font-weight: 400;
+        transform: translate(-50%);
         color: lightgrey;
         &_icon{
             margin-right:0.5rem;
         }
-
     }
 }
 
@@ -49,20 +45,27 @@ a {
     text-decoration: none;
     &:hover {
         text-decoration: none;
+        background-color: rgb(224, 228, 243);
     }
-    // margin-top:1rem;
 }
 .center_box {
     color: #ffffff;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: left;
-    padding:0.5rem;
+    justify-content: left;
+    margin-left:1rem;
+    margin-left:2.8rem;
+    margin-bottom:1rem;
     cursor: pointer;
-    &:hover {
-        background-color: rgb(224, 228, 243);
+    .icon_text {
+        .icon {
+        }
+        .text {
+            margin-left: 0.6rem;
+
+        }
     }
+    
+   
 }
 .selectedLink {
     background-color: rgb(224, 228, 243);

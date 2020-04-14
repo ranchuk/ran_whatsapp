@@ -8,14 +8,14 @@
       -ms-flex-direction: column;
           flex-direction: column;
   height: 100%;
-  background-color: #e0e4f3;
+  background-color: white;
   margin-right: 0.2rem;
 }
 
 .contacts_search {
   position: relative;
   background-color: white;
-  height: 4.6rem;
+  height: 4.4rem;
   margin-bottom: 1px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -26,6 +26,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  border-bottom: 1px solid #e0e4f3;
 }
 
 .contacts_search_input {

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/home/home";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -63,9 +63,11 @@ const App = () => {
           <div className="MainLayout">
             <NavBar />
             <div className="MainContainer">
-            <PrivateRoute exact path="/" component={Home} auth={{isAuthenticated: true}}/>
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
+              <Switch>
+                <PrivateRoute exact path="/" component={Home} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+            </Switch>
             </div>
           </div>
         </Router>

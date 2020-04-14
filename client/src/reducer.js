@@ -10,7 +10,6 @@ function appReducer(state, action) {
     case "OnlineStatus": {
       //TODO update user in chat status
       const { username, status } = action.payload;
-      console.log(action.payload.username);
       const newChats = JSON.parse(JSON.stringify(state.chats));
 
       state.chats.forEach((chat, index) => {
@@ -20,7 +19,6 @@ function appReducer(state, action) {
         }
       });
 
-      console.log(newChats);
       return {
         ...state,
         chats: newChats

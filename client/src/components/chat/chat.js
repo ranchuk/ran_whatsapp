@@ -3,16 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Message from '../message/message';
 import SendIcon from '@material-ui/icons/Send';
-import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/Edit';
+import { Portal } from '@material-ui/core';
+import Modal from "react-bootstrap/Modal";
+import DeleteIcon from '@material-ui/icons/Delete';
 import * as _ from 'lodash';
 
 const debouncedClientWriting = _.debounce((data)=>{
     window.socket.emit("clientWriting", data);
 },200)
 
-const Chat = ({ setChatInEdit, setShowEditModal, item }) => {
+const Chat = ({ item }) => {
   const state = useSelector(state => state);
   const [newMessage, setNewMessage] = useState("");
+  const [showEditModal, setShowEditModal] = useState(false);
   const { username, chatInView } = state;
   const dispatch = useDispatch();
   const messagesEndRef = React.createRef()
@@ -21,7 +25,7 @@ const Chat = ({ setChatInEdit, setShowEditModal, item }) => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
   }
   useEffect(()=>{
-    scrollToBottom();
+    Object.keys(chatInView).length !== 0 && scrollToBottom();
   },[chatInView])
 
   useEffect(()=>{
@@ -55,51 +59,51 @@ const Chat = ({ setChatInEdit, setShowEditModal, item }) => {
     // if (res.status === 200) {
     // }
   };
+  const handleDelete = async e => {
+    const res = await axios.delete(
+      `/api/users/chat/delete/${chatInView.username1}/${chatInView.username2}`
+    );
+    if (res.status === 200) {
+        dispatch({
+          type: "ChatInView",
+          payload: {
+            ...chatInView,
+            chat: []
+          }
+        });
+        dispatch({
+          type: "DeleteChat",
+          payload: {
+            reciever: chatInView.username1 !== username ? chatInView.username1 : chatInView.username2
+          }
+        });
+    }
+    setShowEditModal(false);
+  };
 
-  // const handleDelete = async e => {
-  //   e.preventDefault();
-  //   const res = await axios.delete(
-  //     `/api/users/chat/delete/${chatInView.username1}/${chatInView.username2}`
-  //   );
-  //   if (res.status === 200) {
-  //     dispatch({
-  //       type: "ChatInView",
-  //       payload: {
-  //         ...chatInView,
-  //         chat: []
-  //       }
-  //     });
-  //     dispatch({
-  //       type: "DeleteChat",
-  //       payload: {
-  //         reciever: reciever
-  //       }
-  //     });
-  //   }
-  // };
-
-  return (
-    <div className="chat">
-      <div className="chat_header">
-        <span className="chat_header_name">{chatInView.reciever}</span>
+  return Object.keys(chatInView).length === 0  ? <h1>Please choose contact</h1>  : 
+  <div className="chat">
+        <div className="chat_header">
+        <div className="chat_header_image_name">
+            <img className="contactItem_image" src={require("../../assets/img_avatar.png")} alt="Avatar" style={{width:"50px"}}/>
+            <span className="chat_header_name">{chatInView.reciever}</span>
+        </div>
         <span className="chat_header_edit"
               onClick={(e) => {
                       setShowEditModal(true);
-                      setChatInEdit(item);
               }}
           >
-          <EditIcon  className="contactItem_edit_icon"></EditIcon>
+          <DeleteIcon className="contactItem_edit_icon"></DeleteIcon>
         </span>
       </div>
       <div className="chat_messages">
-          {Object.keys(chatInView).length === 0 ?  <h1>Please choose contact</h1> : Object.keys(chatInView).length > 0 &&
-            chatInView.chat.map((item, index) => {
+          {chatInView.chat.map((item, index) => {
               return <Message key={index} item={item} username={username}/>
             })}
 
           {chatInView.isWriting ?  <Message loader/> : null}
           <div ref={messagesEndRef} />
-        </div>
+      </div>
       <form
         className="chat_input_wrapper"
         onSubmit={handleSubmit}
@@ -116,16 +120,22 @@ const Chat = ({ setChatInEdit, setShowEditModal, item }) => {
         >
           <SendIcon  className="chat_input_button_arrow"></SendIcon>
         </span>
-        {/* <button
-          className="form-control btn btn-danger"
-          style={{ width: "20%" }}
-          onClick={handleDelete}
-        >
-          Delete Messages
-        </button> */}
       </form>
-    </div>
-  );
+      <Portal><Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+        <Modal.Header>
+            <Modal.Title>Are you sure you want to delete this chat?</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <button
+              className="form-control btn btn-danger"
+              onClick={handleDelete}
+            >
+              Delete all messages in this chat
+            </button>
+          </Modal.Body>
+        </Modal>
+      </Portal>
+      </div>
 };
 
 export default Chat;

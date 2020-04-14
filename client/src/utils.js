@@ -9,6 +9,19 @@ const formatAMPM = (date) => {
     return strTime;
 }
 
+const sortByDate = (myArray) => {
+    myArray.sort(function compare(itemA, itemB) {
+        if(itemA.chat.length > 0 && itemB.chat.length > 0){
+            var dateA = new Date(itemA.chat[itemA.chat.length - 1].time);
+            var dateB = new Date(itemB.chat[itemB.chat.length - 1].time);
+            return dateB - dateA;
+        }
+        else if (itemA.chat.length === 0) return dateB
+        else if (itemB.chat.length === 0) return dateA
+    });
+};
+
 module.exports = {
-    formatAMPM
+    formatAMPM,
+    sortByDate
   }

@@ -1,18 +1,20 @@
 import React, {useState} from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import Button from "react-bootstrap/Button";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
 import { Portal } from '@material-ui/core';
 import AddContact from '../../components/addContact/addContact';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 const modalRoot = document.getElementById('modal-root');
-
-const NavBar = () => {
+const NavBar = ({history}) => {
     const [showAddContactModal,setShowAddContactModal] = useState(false);
     const state = useSelector(state => state);
     const { username } = state;
-
+    const currentPath = history.location.pathname;
     const handleLogOut = async () => {
         sessionStorage.clear();
         const res = await axios.post(`/api/users/logout`, {
@@ -25,17 +27,44 @@ const NavBar = () => {
       };
     return (
             <nav className="nav">
-                {/* <span className="center_box"><WhatsAppIcon className="nav_icon"/></span> */}
-                                <span className="center_box">
+                              {/*<span className="center_box"><WhatsAppIcon className="nav_icon"/></span>}\
+                                 <span className="center_box">
                                     <img className="nav_icon"src={require("../../assets/icon4.png")} width="55px" height="55px" />            
-                                </span>
+                                </span> */}
 
                 <div className="nav_links">
-                <NavLink to="/register" activeClassName="selectedLink" exact><span className="center_box">Register</span></NavLink>
-                <NavLink to="/login" activeClassName="selectedLink" exact><span className="center_box">Log in</span></NavLink>
-                <NavLink to="/" activeClassName="selectedLink" exact><span className="center_box">Messages</span></NavLink>
-                <span className="center_box" onClick = {(e)=>setShowAddContactModal(!showAddContactModal)}>Find
-                </span>
+                  <NavLink to="/register" activeClassName="selectedLink" exact>
+                    <div className="center_box">
+                      <div className="icon_text">
+                          <span className="icon"><ChatBubbleOutlineIcon/></span>
+                          <span className="text">Register</span>
+                      </div>
+                    </div>
+                  </NavLink>
+                  <NavLink to="/login" activeClassName="selectedLink" exact>
+                      <div className="center_box">
+                        <div className="icon_text">
+                            <span className="icon"><LockOpenIcon/></span>
+                            <span className="text">Log in</span>
+                        </div>
+                      </div>
+                    </NavLink>
+                    <NavLink to="/" activeClassName="selectedLink" exact>
+                      <div className="center_box">
+                        <div className="icon_text">
+                          <span className="icon"><ChatBubbleOutlineIcon/></span>
+                          <span className="text">Messages</span>
+                        </div>
+                      </div>
+                    </NavLink> 
+                {username !== '' && 
+                    <div className="center_box" onClick = {(e)=>setShowAddContactModal(!showAddContactModal)}>
+                        <div className="icon_text">
+                          <span className="icon"><GroupAddIcon/></span>
+                          <span className="text">Find</span>
+                        </div>
+                    </div>
+                }
                 </div>
                 <div className="nav_logout" variant="secondary" onClick={handleLogOut}>
                     <ExitToAppIcon className="nav_logout_icon"/>
@@ -46,4 +75,4 @@ const NavBar = () => {
     );
 }
 
-export default NavBar;
+export default withRouter(NavBar);

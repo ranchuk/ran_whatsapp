@@ -5,6 +5,7 @@
     height:100%;
     width:100%;
     min-width:17rem;
+    margin-left:0.3rem;
     &_header {
         background-color:white;    
         height:4rem;
@@ -13,13 +14,21 @@
         justify-content: space-between;
         align-items: center;
         &_name {
-            font-size: 2rem;
-            margin-left: 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-left: 1rem;
 
         }
         &_edit {
             cursor: pointer;
-            margin-right: 2rem;
+            margin-right: 1rem;
+        }
+        &_image_name {
+            margin-left: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
         }
     }
     &_messages{
