@@ -1,4 +1,16 @@
 .chat {
+
+    @media only screen 
+    and (max-device-width: 667px) 
+    and (-webkit-min-device-pixel-ratio: 2) {
+        
+        &_hide {
+            display: none !important;
+            width:100%;
+        }
+        margin-left:0rem;
+
+    }
     position: relative;
     width:100%;
     background-color: #e0e4f3;    
@@ -29,6 +41,9 @@
             align-items: center;
             justify-content: center;
 
+        }
+        &_back {
+            margin-left: 1rem;
         }
     }
     &_messages{

@@ -1,3 +1,8 @@
+
+const axios =  require('axios');
+const io = require('socket.io-client');
+const jwt = require('jsonwebtoken');
+
 const formatAMPM = (date) => {
     var hours = date.getHours();
     var minutes = date.getMinutes();
@@ -9,6 +14,15 @@ const formatAMPM = (date) => {
     return strTime;
 }
 
+const setAuthToken = token => {
+  if (token) {
+    //Apply to every request
+    axios.defaults.headers.common["Authorization"] = token;
+  } else {
+    //Delete auth header
+    delete axios.defaults.headers.common["Authorization"];
+  }
+}
 const sortByDate = (myArray) => {
     myArray.sort(function compare(itemA, itemB) {
         if(itemA.chat.length > 0 && itemB.chat.length > 0){
@@ -21,7 +35,28 @@ const sortByDate = (myArray) => {
     });
 };
 
+const socketConnection = (username, token, dispatch) => {
+  let socket = io.connect("/",  { query: {token}})
+  socket.on('connect', function() {
+        window.socket = socket;
+        if (socket.connected) {
+              window.socket.on("clientNewMessage", data => {
+                dispatch({ type: "AddMessage", payload: data });
+              });
+              window.socket.on("clientWriting", data => {
+                dispatch({ type: "someoneWriting", payload: data });
+              });
+              window.socket.on("online_status", data => {
+                dispatch({ type: "OnlineStatus", payload: data });
+              });
+                window.socket.emit("join", { username });
+        } 
+  })
+}
+
 module.exports = {
     formatAMPM,
-    sortByDate
-  }
+    sortByDate,
+    setAuthToken,
+    socketConnection,
+}

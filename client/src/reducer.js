@@ -4,7 +4,8 @@ function appReducer(state, action) {
       return {
         ...state,
         username: action.payload.username,
-        chats: action.payload.chats
+        chats: action.payload.chats,
+        token: action.payload.token
       };
     }
     case "OnlineStatus": {

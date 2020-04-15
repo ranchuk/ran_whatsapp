@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
+import jwt from 'jsonwebtoken';
+import io from "socket.io-client";
 
+const setAuthToken = require('../utils').setAuthToken;
+const socketConnection = require('../utils').socketConnection;
 const Login = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,21 +20,19 @@ const Login = props => {
       password
     });
     if (res.status === 200) {
-      // const socket = io.connect("/");
-      // if (socket !== undefined) {
-      window.socket.emit("join", { username, chats: res.data.chats });
-      // }
+      socketConnection(username, res.data.token, dispatch);
+      setAuthToken(res.data.token);
+      const decoded = jwt.decode(res.data.token);
       dispatch({
         type: "Login",
         payload: {
-          username: username,
-          token: 0,
+          username: decoded.username,
+          token: res.data.token,
           chats: res.data.chats
         }
       });
-      //after login, redirect to ChatList page
-      props.history.push("/");
-    }
+      props.history.push("/");    
+    };
   };
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">

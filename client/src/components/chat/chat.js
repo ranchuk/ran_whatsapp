@@ -7,16 +7,20 @@ import SendIcon from '@material-ui/icons/Send';
 import { Portal } from '@material-ui/core';
 import Modal from "react-bootstrap/Modal";
 import DeleteIcon from '@material-ui/icons/Delete';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import classnames from 'classnames';
+
 import * as _ from 'lodash';
 
 const debouncedClientWriting = _.debounce((data)=>{
     window.socket.emit("clientWriting", data);
 },200)
 
-const Chat = ({ item }) => {
+const Chat = ({ item, setShowChat, showChat }) => {
   const state = useSelector(state => state);
   const [newMessage, setNewMessage] = useState("");
   const [showEditModal, setShowEditModal] = useState(false);
+  // handleShowChat
   const { username, chatInView } = state;
   const dispatch = useDispatch();
   const messagesEndRef = React.createRef()
@@ -43,7 +47,7 @@ const Chat = ({ item }) => {
     debouncedClientWriting(data)
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
     const data = {
       time: "",
@@ -52,12 +56,9 @@ const Chat = ({ item }) => {
       message: newMessage
     };
     setNewMessage("");
-    // console.log(data);
-    window.socket.emit("clientNewMessage", data);
-
-    // const res = await axios.post("/api/users/addMessage", data);
-    // if (res.status === 200) {
-    // }
+    if(newMessage.toString().trim() !== ''){
+      window.socket.emit("clientNewMessage", data);
+    }
   };
   const handleDelete = async e => {
     const res = await axios.delete(
@@ -82,19 +83,22 @@ const Chat = ({ item }) => {
   };
 
   return Object.keys(chatInView).length === 0  ? <h1>Please choose contact</h1>  : 
-  <div className="chat">
+  <div className={classnames(showChat ? "chat" : "chat_hide")}>
         <div className="chat_header">
-        <div className="chat_header_image_name">
-            <img className="contactItem_image" src={require("../../assets/img_avatar.png")} alt="Avatar" style={{width:"50px"}}/>
-            <span className="chat_header_name">{chatInView.reciever}</span>
-        </div>
-        <span className="chat_header_edit"
-              onClick={(e) => {
-                      setShowEditModal(true);
-              }}
-          >
-          <DeleteIcon className="contactItem_edit_icon"></DeleteIcon>
-        </span>
+          <div className="chat_header_back">
+            <ArrowBackIcon onClick={(e)=>setShowChat(false)} />
+          </div>
+          <div className="chat_header_image_name">
+              <img className="contactItem_image" src={require("../../assets/img_avatar.png")} alt="Avatar" style={{width:"50px"}}/>
+              <span className="chat_header_name">{chatInView.reciever}</span>
+          </div>
+          <span className="chat_header_edit"
+                onClick={(e) => {
+                        setShowEditModal(true);
+                }}
+            >
+            <DeleteIcon className="contactItem_edit_icon"></DeleteIcon>
+          </span>
       </div>
       <div className="chat_messages">
           {chatInView.chat.map((item, index) => {

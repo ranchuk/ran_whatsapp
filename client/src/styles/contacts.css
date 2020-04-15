@@ -80,4 +80,87 @@
       -ms-flex-direction: column;
           flex-direction: column;
 }
+
+@media only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  .contacts {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    height: 100%;
+    background-color: white;
+    margin-right: 0rem;
+  }
+  .contacts_hide {
+    display: none !important;
+    width: 100%;
+  }
+  .contacts_search {
+    position: relative;
+    background-color: white;
+    height: 4.4rem;
+    margin-bottom: 1px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    border-bottom: 1px solid #e0e4f3;
+  }
+  .contacts_search_input {
+    width: 90%;
+    border: none;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    background-image: -webkit-gradient(linear, left top, right top, from(#f0f0f0e7), to(#e7e6e6e7));
+    background-image: linear-gradient(to right, #f0f0f0e7, #e7e6e6e7);
+  }
+  .contacts_search_input:focus {
+    outline: none;
+  }
+  .contacts_search_input_wrraper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+    width: 85%;
+    border-radius: 5px;
+    padding: 0.3rem;
+    background-image: -webkit-gradient(linear, left top, right top, from(#f0f0f0e7), to(#e7e6e6e7));
+    background-image: linear-gradient(to right, #f0f0f0e7, #e7e6e6e7);
+  }
+  .contacts_search_icon {
+    left: 0px;
+    margin-right: 0.2rem;
+    color: #c7c6c6;
+  }
+  .contacts_list {
+    height: 100%;
+    overflow: scroll;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
 /*# sourceMappingURL=contacts.css.map */

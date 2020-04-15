@@ -32,6 +32,12 @@
   margin-left: 15px;
 }
 
+@media only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  .contactItem_name {
+    width: 100%;
+  }
+}
+
 .contactItem_name_message {
   overflow: hidden;
   text-overflow: ellipsis;

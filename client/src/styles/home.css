@@ -5,4 +5,10 @@
   height: 100%;
   padding: 0.1rem 0.1rem 0.1rem 0.1rem;
 }
+
+@media only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  .home {
+    padding: 0rem;
+  }
+}
 /*# sourceMappingURL=home.css.map */

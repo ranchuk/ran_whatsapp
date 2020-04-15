@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     min-width:11rem;
+
     font-size: 1rem;
     font-weight: 400;
     background-color: rgb(81, 106, 187);
@@ -24,49 +25,129 @@
         height:20rem;
         display: flex;
         flex-direction: column;
-    }
-    &_logout {
-        position: absolute;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        bottom: 2%;
-        left:50%;
-        transform: translate(-50%);
-        color: lightgrey;
-        &_icon{
-            margin-right:0.5rem;
+        @media only screen 
+        and (max-device-width: 667px) 
+        and (-webkit-min-device-pixel-ratio: 2) { 
+            flex-direction: row;
         }
+    //    &_logout{
+    //        .icon_text {
+    //         margin-left:0px;
+    //        }
+    //     bottom:0px;
+    //     left:50%;
+    //     // transform: translateX(-50%);
+    //     position: absolute;
+            
+    //     }
     }
 }
 
 a {
     text-decoration: none;
+    text-align: left;
+    padding:0.5rem;
+    margin-bottom: 1.5rem;
     &:hover {
         text-decoration: none;
         background-color: rgb(224, 228, 243);
     }
-}
-.center_box {
-    color: #ffffff;
-    display: flex;
-    justify-content: left;
-    margin-left:1rem;
-    margin-left:2.8rem;
-    margin-bottom:1rem;
-    cursor: pointer;
+        color: #ffffff;
+        cursor: pointer;
     .icon_text {
+        color: #ffffff;
+        display: flex;
+        margin-left: 50%;
+        transform: translateX(-50%);
         .icon {
+            display: inline-block;
         }
         .text {
-            margin-left: 0.6rem;
+            @media only screen 
+            and (max-device-width: 667px) 
+            and (-webkit-min-device-pixel-ratio: 2) { 
+                display: none
+            }
+            display: inline-block;
+            margin-left: 0.7rem;
 
         }
     }
-    
-   
 }
 .selectedLink {
     background-color: rgb(224, 228, 243);
+}
+
+
+
+//----------------------------------------- PHONES ------------------------------------
+
+@media only screen 
+and (max-device-width: 667px) 
+and (-webkit-min-device-pixel-ratio: 2) { 
+        #root {
+            height: 100%;
+        }
+        .nav {
+            max-height: 3rem;
+            background-color: rgb(81, 106, 187);
+            color: #e2e0e0;
+            padding: 0px;
+            &_icon {
+                &:hover {
+                    background-color: none;
+                }
+            }
+
+            &_links{
+                height:100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+            //    &_logout{
+            //        .icon_text {
+            //         margin-left:0px;
+            //        }
+            //     bottom:0px;
+            //     left:50%;
+            //     // transform: translateX(-50%);
+            //     position: absolute;
+                    
+            //     }
+            }
+        }
+
+        a {
+            text-decoration: none;
+            text-align: left;
+            padding:0rem;
+            margin-bottom: 0rem;
+            height:100%;
+            width:100%;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+                text-decoration: none;
+                background-color: rgb(224, 228, 243);
+            }
+                color: #ffffff;
+                cursor: pointer;
+            .icon_text {
+                color: #ffffff;
+                display: flex;
+                margin-left: 0px;
+                transform: translateX(0%);
+                .icon {
+                    display: inline-block;
+                }
+                .text {
+                    display:none;
+
+                }
+            }
+        }
+        .selectedLink {
+            background-color: rgb(224, 228, 243);
+        }
 }

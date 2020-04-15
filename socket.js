@@ -4,9 +4,27 @@ const Chat = require('./config/models/chat');
 
 const socketStart = (http) => {
     var client = require("socket.io")(http);
+    var jwt = require('jsonwebtoken');
 
-client.on("connection", socket => {
-    socket.on("join", function(user) {
+  client.use(function(socket, next){
+      if (socket.handshake.query && socket.handshake.query.token){
+          jwt.verify(socket.handshake.query.token, require('./config/keys/keys').secretOrKey, function(err, decoded) {
+            if(!err){
+              socket.decoded = decoded;
+              // console.log('**********DECODED SOCKET TOKEN************')
+              // console.log(socket.decoded)
+              // console.log('**********DECODED SOCKET TOKEN************')
+              next();
+            }
+          });
+      } else {
+          console.error('**********ERROR DECODED SOCKET TOKEN************');
+          // next(new Error('Authentication error'));
+      }    
+    })
+  client.on("connection", socket => {
+      console.log('connected succefully')
+      socket.on("join", function(user) {
         // TO DO - update only "friends" contacts and not all online users
       connections.forEach(item => {
         client
@@ -31,6 +49,7 @@ client.on("connection", socket => {
           return true;
         }
       });
+      console.log(connections);
     // TO DO - update only "friends" contacts and not all online users
       connections.forEach(item => {
         client
@@ -40,12 +59,10 @@ client.on("connection", socket => {
             status: "offline"
           });
       });
-      // console.log(connections);
     });
 
     socket.on("clientWriting", function(data) {
-      // console.log(data);
-
+      console.log(data)
       if (client.sockets.adapter.rooms[data.reciever]) {
         client.to(data.reciever).emit("clientWriting", data);
       }

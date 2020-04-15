@@ -59,3 +59,77 @@
         flex-direction: column;
     }
 }
+
+//------------------------- PHONES ----------------------
+
+
+@media only screen 
+and (max-device-width: 667px) 
+and (-webkit-min-device-pixel-ratio: 2) { 
+    .contacts {
+        width: 100%;
+        display:flex;
+        flex-direction: column;
+        height: 100%;
+        background-color:white;
+
+        &_hide {
+            display: none !important;
+            width:100%;
+        }
+    
+        // border: 1px solid black;
+        margin-right:0rem;
+    
+        &_search {
+            position: relative;
+            background-color:white;    
+            height:4.4rem;
+            margin-bottom:1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgb(224, 228, 243);
+    
+            // padding:2rem;
+            &_input {
+                width:90%;
+                // padding: 0.5r/em;
+                // background-image: linear-gradient(to right,#f0f0f0e7,#e7e6e6e7);
+                // background-color:#ece7e7c2;
+                border:none;
+                border-radius: 2px;
+                font-size: 0.9rem;
+                background-image: linear-gradient(to right,#f0f0f0e7,#e7e6e6e7);
+    
+                &:focus {
+                    outline: none;
+    
+                }
+    
+                &_wrraper {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: row-reverse;
+                    width:85%;
+                    border-radius: 5px;
+                    padding: 0.3rem;
+                    background-image: linear-gradient(to right,#f0f0f0e7,#e7e6e6e7);
+                }
+            }
+            &_icon {
+                left:0px;
+                margin-right: 0.2rem;
+                color:rgb(199, 198, 198);
+            }
+        }
+    
+        &_list {
+            height: 100%;
+            overflow: scroll;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

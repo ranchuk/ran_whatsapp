@@ -8,6 +8,16 @@
   margin-left: 0.3rem;
 }
 
+@media only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  .chat {
+    margin-left: 0rem;
+  }
+  .chat_hide {
+    display: none !important;
+    width: 100%;
+  }
+}
+
 .chat_header {
   background-color: white;
   height: 4rem;
@@ -45,6 +55,10 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.chat_header_back {
+  margin-left: 1rem;
 }
 
 .chat_messages {

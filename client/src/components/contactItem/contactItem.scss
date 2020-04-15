@@ -14,6 +14,12 @@
         align-items: left;
         margin-left: 15px;
 
+        @media only screen 
+            and (max-device-width: 667px) 
+            and (-webkit-min-device-pixel-ratio: 2) { 
+            width: 100%;
+        }
+
         &_message {
             overflow: hidden;
             text-overflow: ellipsis;

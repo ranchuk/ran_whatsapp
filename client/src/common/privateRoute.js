@@ -1,15 +1,21 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const {username} = useSelector((state)=>state);
+const socketConnection = require('../utils').socketConnection;
+const setAuthToken = require('../utils').setAuthToken;
+
+const PrivateRoute = ({ component: Component, history, ...rest }) => {
+  const {token, username} = useSelector((state)=>state);
+  const dispatch = useDispatch();
+
   //TO DO  get token. if exist, send to login api to retrieve new data
   return <Route
     {...rest}
     render={props =>
-      username !== '' ? (
+      token && username  ? (
         <Component {...props} />
       ) : (
         <Redirect to="/login" />
@@ -23,4 +29,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 // };
 
 
-export default PrivateRoute;
+export default withRouter(PrivateRoute);

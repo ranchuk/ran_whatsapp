@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const getConnections = require("../../socket").getConnections;
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const verifyToken = require('../../config/passport').verifyToken;
 
 // Load User model
 const User = require("../../config/models/user");
@@ -17,11 +21,55 @@ router.post("/login", (req, res) => {
   User.findOne({ username: username })
     .then(user => {
       // Check for user
-      if (!user || user.password !== password) {
+      if (!user) {
         return res.status(404).json("User not found");
       }
+      bcrypt.compare(password, user.password, function(err, result) {
+        if(result){
+          Chat.find({
+            $or: [{ username1: username }, { username2: username }]
+          })
+            .then(chats => {
+              const connections = getConnections();
+              const newChats = chats.map(chat => {
+                const isUserOnline = connections.find(
+                  connection =>
+                    connection.username === chat.username1 ||
+                    connection.username === chat.username2
+                );
+                chat = JSON.parse(JSON.stringify(chat));
+                chat.isOnline = isUserOnline ? true : false;
+                return chat;
+              });
+              jwt.sign(
+                {username: user.username}, 
+                require('../../config/keys/keys').secretOrKey, { expiresIn: '1h' }, 
+                (err, token)=>{
+                  res.json({ success: true, username, chats: newChats, token });
+              });
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        }
+        else{
+          res.status(404).json('Passowrd not correct')
+          console.error(err);
+        }
+      });
+    })
+    .catch(err => {
+      console.error(err);
+    });
+});
+
+router.get("/getChats", verifyToken, (req, res) => {
+
+    const decoded_token = req.decoded_token;
+  
+    if(decoded_token){
       Chat.find({
-        $or: [{ username1: username }, { username2: username }]
+        $or: [{ username1: decoded_token.username }, { username2: decoded_token.username }]
       })
         .then(chats => {
           const connections = getConnections();
@@ -33,29 +81,24 @@ router.post("/login", (req, res) => {
             );
             chat = JSON.parse(JSON.stringify(chat));
             chat.isOnline = isUserOnline ? true : false;
-
             return chat;
           });
-          res.json({ success: true, chats: newChats });
+          res.status(200).json({ success: true, username: decoded_token.username, chats: newChats });
         })
         .catch(err => {
           console.error(err);
         });
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    }
+    else{
+      res.status(404).json({ success: false });
+    }
 });
 
 router.post("/logout", (req, res) => {
-  const username = req.body.username;
-
-  // const connections = getConnections();
-  // connections.filter(connection =>connection.username === chat.username1);
   res.json({ success: true });
 });
 
-router.delete("/chat/delete/:username1/:username2", (req, res) => {
+router.delete("/chat/delete/:username1/:username2",verifyToken, (req, res) => {
   const username1 = req.params.username1;
   const username2 = req.params.username2;
   Chat.find({
@@ -90,21 +133,26 @@ router.post("/register", (req, res) => {
       if (user) {
         return res.status(404).json("User already exist");
       }
-      const newUser = new User({
-        username: username,
-        password: password
-      });
-
-      newUser
-        .save()
-        .then(user => res.json(user))
-        .catch(err => console.log(err));
+      bcrypt.genSalt(saltRounds, function(err, salt) {
+        bcrypt.hash(password, salt, function(err, hash) {
+            // Store hash in your password DB.
+            const newUser = new User({
+              username: username,
+              password: hash
+            });
+      
+            newUser
+              .save()
+              .then(user => res.json(user))
+              .catch(err => console.log(err));
+        });
+    });
     })
     .catch(err => {
       console.error(err);
     });
 });
-router.post("/newContact", (req, res) => {
+router.post("/newContact",verifyToken, (req, res) => {
   const { username, contact } = req.body;
 
   //Find user by email
@@ -148,9 +196,8 @@ router.post("/newContact", (req, res) => {
 });
 
 
-router.get("/searchUser", async (req, res) => {
+router.get("/searchUser",verifyToken, async (req, res) => {
   const { query } = req.query;
-
   //Find user by email
   try{
     const users = await User.find({ username: { "$regex": query, "$options": "i" } })

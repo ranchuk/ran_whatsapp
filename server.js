@@ -14,17 +14,7 @@ const socketStart  = require('./socket').socketStart;
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(loggerMiddleware)
-// app.use(expressWinston.logger({
-//   transports: [
-//     new winston.transports.Console()
-//   ],
-//   meta:false,
-//   format: winston.format.combine(
-//     winston.format.colorize(),
-//     winston.format.json()
-//   ),
-//   requestWhitelist: ['query','body'],  //these are not included in the standard StackDriver httpRequest
-// }))
+
 // Use Routes
 app.use("/api/users", users);
 

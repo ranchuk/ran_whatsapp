@@ -4,7 +4,7 @@ import axios from "axios";
 import classnames from 'classnames';
 const formatAMPM = require('../../utils').formatAMPM;
 
-const ContactItem = ({item, isOnline, reciever, setReciever}) => {
+const ContactItem = ({item, isOnline, reciever, setReciever,setShowChat}) => {
   const dispatch = useDispatch()
 
   const lastMessageDate = item.chat[item.chat.length - 1] && item.chat[item.chat.length - 1].time ? formatAMPM(new Date(item.chat[item.chat.length - 1].time)) : null
@@ -16,6 +16,7 @@ const ContactItem = ({item, isOnline, reciever, setReciever}) => {
                   payload: { ...item, reciever }
                 });
                 setReciever(reciever);
+                setShowChat(true);
               }}>
                   <div className="contactItem_image">
                     <img className="contactItem_image" src={require("../../assets/img_avatar.png")} alt="Avatar" style={{width:"50px"}}/>

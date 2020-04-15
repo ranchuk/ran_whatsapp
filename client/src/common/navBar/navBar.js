@@ -9,6 +9,7 @@ import AddContact from '../../components/addContact/addContact';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import classnames from 'classnames';
 const modalRoot = document.getElementById('modal-root');
 const NavBar = ({history}) => {
     const [showAddContactModal,setShowAddContactModal] = useState(false);
@@ -34,41 +35,37 @@ const NavBar = ({history}) => {
 
                 <div className="nav_links">
                   <NavLink to="/register" activeClassName="selectedLink" exact>
-                    <div className="center_box">
                       <div className="icon_text">
                           <span className="icon"><ChatBubbleOutlineIcon/></span>
                           <span className="text">Register</span>
                       </div>
-                    </div>
                   </NavLink>
                   <NavLink to="/login" activeClassName="selectedLink" exact>
-                      <div className="center_box">
                         <div className="icon_text">
                             <span className="icon"><LockOpenIcon/></span>
                             <span className="text">Log in</span>
                         </div>
-                      </div>
                     </NavLink>
                     <NavLink to="/" activeClassName="selectedLink" exact>
-                      <div className="center_box">
                         <div className="icon_text">
                           <span className="icon"><ChatBubbleOutlineIcon/></span>
                           <span className="text">Messages</span>
                         </div>
-                      </div>
                     </NavLink> 
                 {username !== '' && 
-                    <div className="center_box" onClick = {(e)=>setShowAddContactModal(!showAddContactModal)}>
-                        <div className="icon_text">
+                    <NavLink to="/" exact>
+                        <div className="icon_text" onClick = {(e)=>setShowAddContactModal(!showAddContactModal)}>
                           <span className="icon"><GroupAddIcon/></span>
                           <span className="text">Find</span>
                         </div>
-                    </div>
+                    </NavLink>
                 }
-                </div>
-                <div className="nav_logout" variant="secondary" onClick={handleLogOut}>
-                    <ExitToAppIcon className="nav_logout_icon"/>
-                    <span className="nav_logout_text">Logout</span>
+                  <NavLink to="/" exact className="nav_links_logout">
+                      <div className="icon_text" onClick={handleLogOut}>
+                          <span className="icon"><ExitToAppIcon/></span>
+                          <span className="text">Logout</span>
+                      </div>
+                  </NavLink>
                 </div>
                 {showAddContactModal ? <Portal container={modalRoot}><AddContact showNewContactModal={showAddContactModal} setNewContactModal={setShowAddContactModal}/></Portal> : null}                  
             </nav>
