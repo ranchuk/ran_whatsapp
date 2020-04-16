@@ -82,7 +82,7 @@ const Chat = ({ item, setShowChat, showChat }) => {
     setShowEditModal(false);
   };
 
-  return Object.keys(chatInView).length === 0  ? <h1>Please choose contact</h1>  : 
+  return Object.keys(chatInView).length === 0  ? null  : 
   <div className={classnames(showChat ? "chat" : "chat_hide")}>
         <div className="chat_header">
           <div className="chat_header_back">

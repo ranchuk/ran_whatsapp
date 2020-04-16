@@ -19,12 +19,16 @@
   margin: 0;
   box-sizing: border-box;
 }
-
+html, body {
+  height: 100%;
+}
+#root {
+  height: 100%;
+}
 body {
-  font-size: 62.5%;
   padding: 2.5rem;
   background-color:white;
-  height:100vh;
+  overflow: hidden;
 }
 @media only screen 
 and (max-device-width: 667px) 
@@ -33,7 +37,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
     font-size: 62.5%;
     padding: 0rem;
     background-color:white;
-    height:100vh;
+    height:100%;
   }
 }
 .MainLayout {
@@ -49,17 +53,18 @@ and (-webkit-min-device-pixel-ratio: 2) {
     flex-direction: column-reverse;
   }
 }
+
 .MainContainer{
   width:100%;
   height:100%;
   background-color: rgb(224, 228, 243);
+
 }
 @media only screen 
 and (max-device-width: 667px) 
 and (-webkit-min-device-pixel-ratio: 2) { 
   .MainContainer{
-    height:95vh;
-
+    height:100%;
   }
 }
 /* .contactItem:hover,

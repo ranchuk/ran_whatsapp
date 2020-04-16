@@ -10,7 +10,6 @@ const Home = () => {
   const [showChat, setShowChat] = useState(false);
 
   const { chatInView } = state;
-
   return (
     <div className="home">
         <Contacts
