@@ -5,6 +5,7 @@ import Contacts from "../contacts/contacts";
 
 
 const Home = () => {
+  const dispatch = useDispatch()
   const state = useSelector(state => state);
   const [reciever, setReciever] = useState("");
   const [showChat, setShowChat] = useState(false);

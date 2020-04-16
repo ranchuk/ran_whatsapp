@@ -155,12 +155,12 @@ router.post("/register", (req, res) => {
 router.post("/newContact",verifyToken, (req, res) => {
   const { username, contact } = req.body;
 
-  //Find user by email
+  // Find user by email
   User.findOne({ username: contact })
     .then(user => {
       // Check for user
       if (!user) {
-        return res.status(404).json("User not exist");
+        return res.status(200).json({message :"User not exist"});
       }
       const username1 = username;
       const username2 = contact;
@@ -173,7 +173,7 @@ router.post("/newContact",verifyToken, (req, res) => {
         .then(chat => {
           // console.log(chat);
           if (chat.length !== 0) {
-            return res.status(404).json("Chat already exist");
+            return res.status(200).json({message: "Chat already exist"});
           }
           const newChat = new Chat({
             username1: username,
@@ -183,7 +183,7 @@ router.post("/newContact",verifyToken, (req, res) => {
 
           newChat
             .save()
-            .then(user => res.json(newChat))
+            .then(user => res.status(200).json({message: "success", newChat}))
             .catch(err => console.log(err));
         })
         .catch(err => {
@@ -200,13 +200,14 @@ router.get("/searchUser",verifyToken, async (req, res) => {
   const { query } = req.query;
   //Find user by email
   try{
-    const users = await User.find({ username: { "$regex": query, "$options": "i" } })
+    let users = await User.find({ username: { "$regex": query, "$options": "i" }}, {username: true, _id: 0})
+    users = users && users.filter((user)=>user.username !== req.decoded_token.username).map(user=>user.username) // remove myself from list
     if (!users) {
       return res.status(200).json("User not exist");
     }
     else{
       const results = JSON.parse(JSON.stringify(users));
-      return res.status(200).json({success: true, results});
+      return res.status(200).json({message: "success", results});
 
     }
   }

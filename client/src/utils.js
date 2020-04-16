@@ -36,10 +36,9 @@ const sortByDate = (myArray) => {
 };
 
 const socketConnection = (username, token, dispatch) => {
-  let socket = io.connect("/",  { query: {token}})
-  socket.on('connect', function() {
-        window.socket = socket;
-        if (socket.connected) {
+  window.socket = io.connect("/",  { query: {token}})
+  window.socket.on('connect', function() {
+        if (window.socket.connected) {
               window.socket.on("clientNewMessage", data => {
                 dispatch({ type: "AddMessage", payload: data });
               });

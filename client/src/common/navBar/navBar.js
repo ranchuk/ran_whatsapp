@@ -14,7 +14,7 @@ const modalRoot = document.getElementById('modal-root');
 const NavBar = ({history}) => {
     const [showAddContactModal,setShowAddContactModal] = useState(false);
     const state = useSelector(state => state);
-    const { username } = state;
+    const { username, isNavbarOpen } = state;
     const currentPath = history.location.pathname;
     const handleLogOut = async () => {
         sessionStorage.clear();
@@ -27,7 +27,7 @@ const NavBar = ({history}) => {
         // window.location.href = "/login";
       };
     return (
-            <nav className="nav">
+            <nav className={classnames(isNavbarOpen ? "nav" : "nav_hidden")}>
                               {/*<span className="center_box"><WhatsAppIcon className="nav_icon"/></span>}\
                                  <span className="center_box">
                                     <img className="nav_icon"src={require("../../assets/icon4.png")} width="55px" height="55px" />            

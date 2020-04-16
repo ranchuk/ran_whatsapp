@@ -17,7 +17,9 @@
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid rgb(224, 228, 243);
-
+        &_burger_menu {
+            display: none;
+        }
         // padding:2rem;
         &_input {
             width:90%;
@@ -82,16 +84,19 @@ and (-webkit-min-device-pixel-ratio: 2) {
         margin-right:0rem;
     
         &_search {
+            display: flex;
+            justify-content: space-evenly;
             position: relative;
             background-color:white;    
             height:4.4rem;
             margin-bottom:1px;
-            display: flex;
-            justify-content: center;
             align-items: center;
             border-bottom: 1px solid rgb(224, 228, 243);
     
             // padding:2rem;
+            &_burger_menu {
+                display: block;
+            }
             &_input {
                 width:90%;
                 // padding: 0.5r/em;

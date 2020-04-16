@@ -1,5 +1,19 @@
 function appReducer(state, action) {
   switch (action.type) {
+    case "OPEN_CLOSE_NAVBAR": {
+        // if(action.payload === false){
+          return {
+            ...state,
+            isNavbarOpen : action.payload
+          };
+        // }
+        // else{
+        // return {
+        //   ...state,
+        //   isNavbarOpen : !state.isNavbarOpen 
+        // };
+      // }
+    }
     case "Login": {
       return {
         ...state,

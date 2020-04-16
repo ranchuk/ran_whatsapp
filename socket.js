@@ -23,7 +23,6 @@ const socketStart = (http) => {
       }    
     })
   client.on("connection", socket => {
-      console.log('connected succefully')
       socket.on("join", function(user) {
         // TO DO - update only "friends" contacts and not all online users
       connections.forEach(item => {
@@ -36,8 +35,10 @@ const socketStart = (http) => {
       });
       connections.push({ username: user.username, id: socket.id });
       socket.join(user.username);
-
-      // console.log(connections);
+      console.log(`----------------------------------------------`)
+      console.log(`${user.username} connected succefully`)
+      console.log('online users: ',connections);
+      console.log(`----------------------------------------------`)
     });
     socket.on("disconnect", () => {
       let diconnectedUsername = "";
@@ -49,7 +50,11 @@ const socketStart = (http) => {
           return true;
         }
       });
-      console.log(connections);
+      console.log(`----------------------------------------------`)
+      console.log(`${diconnectedUsername} disconncted succefully`)
+      console.log('online users: ',connections);
+      console.log(`----------------------------------------------`)
+
     // TO DO - update only "friends" contacts and not all online users
       connections.forEach(item => {
         client

@@ -83,7 +83,7 @@ const Chat = ({ item, setShowChat, showChat }) => {
   };
 
   return Object.keys(chatInView).length === 0  ? null  : 
-  <div className={classnames(showChat ? "chat" : "chat_hide")}>
+  <div className={classnames(showChat ? "chat" : "chat_hide")} onClick={()=>{}/**dispatch({type: "OPEN_CLOSE_NAVBAR", payload: false})**/}>
         <div className="chat_header">
           <div className="chat_header_back">
             <ArrowBackIcon onClick={(e)=>setShowChat(false)} />

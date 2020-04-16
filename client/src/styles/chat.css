@@ -58,7 +58,14 @@
 }
 
 .chat_header_back {
-  margin-left: 1rem;
+  display: none;
+}
+
+@media only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  .chat_header_back {
+    display: block;
+    margin-left: 1rem;
+  }
 }
 
 .chat_messages {

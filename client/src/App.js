@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
 import Home from "./components/home/home";
 import Login from "./components/Login";
@@ -28,7 +28,8 @@ var initialState = {
   username: "",
   chats: [],
   chatInView: {},
-  token: ''
+  token: '',
+  isNavbarOpen: false
 };
 // if (sessionStorage.getItem("persist:root")) {
 //   const data = JSON.parse(sessionStorage.getItem("persist:root"));
@@ -61,7 +62,9 @@ let persistor = persistStore(store);
 
 export const Context = React.createContext();
 
-const App = (props) => {
+const App = () => {
+// const [isBurgerOpen, setIsBurgerOpen] = useState(false);
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

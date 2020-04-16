@@ -12,6 +12,10 @@ const ContactItem = ({item, isOnline, reciever, setReciever,setShowChat}) => {
   return <div className="contactItem"                     
               onClick={e => {
                 dispatch({
+                  type: "OPEN_CLOSE_NAVBAR",
+                  payload: false
+                });
+                dispatch({
                   type: "ChatInView",
                   payload: { ...item, reciever }
                 });

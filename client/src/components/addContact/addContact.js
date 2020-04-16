@@ -20,20 +20,26 @@ import * as _ from 'lodash';
             contact: query
           });
           if (res.status === 200) {
-            setNewContactModal(false);
-            dispatch({ type: "AddContact", payload: res.data });
+              if(res.data.message !== 'success'){
+                setErrorNewContact(res.data.message);
+              }
+              else{
+                    setNewContactModal(false);
+                    dispatch({ type: "AddContact", payload: res.data.newChat });
+              }
           }
         } catch (e) {
-          setErrorNewContact("User not exist");
+          setErrorNewContact('Something went wrong');
         }
     };
 
     const handleInputChange = async (e) => {
         e.preventDefault();
         setQuery(e.target.value);
+        setErrorNewContact('');
         const query = e.target.value;
         if(query !== '') {
-           debouncedSearch(setContactsList, query);
+           debouncedSearch(setContactsList,setErrorNewContact, query);
         }
         else{
             setContactsList([])
@@ -53,8 +59,8 @@ import * as _ from 'lodash';
                                 placeholder="Search User"
                                 />
                             </InputGroup>
-                            {query && contactsList.map((contact)=>{
-                                return <div className="add_contact_search_item" onClick={(e)=>setQuery(contact.username)}>{contact.username}</div>
+                            {query && contactsList.map((username, index)=>{
+                                return <div key={index} className="add_contact_search_item" onClick={(e)=>setQuery(username)}>{username}</div>
                             })}
                             <span style={{ color: "red" }}>{errorNewContact}</span>
                     </div>
@@ -86,7 +92,17 @@ import * as _ from 'lodash';
  export default AddContact;
 
 
-const debouncedSearch = _.debounce(async (setContactsList, query)=>{
+const debouncedSearch = _.debounce(async (setContactsList,setErrorNewContact, query)=>{
         const res = await axios.get(`api/users/searchUser?query=${query}`);
-        setContactsList(res.data.results);
+        if (res.status === 200) {
+            if(res.data.message !== 'success'){
+              setErrorNewContact(res.data.message);
+            }
+            else{
+                setContactsList(res.data.results);
+            }
+        } 
+        else {
+            setErrorNewContact('Something went wrong');
+        }
 },500)

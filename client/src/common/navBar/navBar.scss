@@ -3,6 +3,10 @@
     height: 100%;
 }
 .nav {
+
+    &_hidden {
+        display: none;
+    }
     position:relative;
     display: flex;
     flex-direction: column;
@@ -28,7 +32,7 @@
         @media only screen 
         and (max-device-width: 667px) 
         and (-webkit-min-device-pixel-ratio: 2) { 
-            flex-direction: row;
+            // flex-direction: row;
         }
     //    &_logout{
     //        .icon_text {
@@ -66,7 +70,7 @@ a {
             @media only screen 
             and (max-device-width: 667px) 
             and (-webkit-min-device-pixel-ratio: 2) { 
-                display: none
+                // display: none
             }
             display: inline-block;
             margin-left: 0.7rem;
@@ -85,69 +89,19 @@ a {
 @media only screen 
 and (max-device-width: 667px) 
 and (-webkit-min-device-pixel-ratio: 2) { 
-        #root {
-            height: 100%;
-        }
-        .nav {
-            max-height: 3rem;
-            background-color: rgb(81, 106, 187);
-            color: #e2e0e0;
-            padding: 0px;
-            &_icon {
-                &:hover {
-                    background-color: none;
-                }
-            }
+    .nav {
+        animation: leftToRight 1s;
+    }
+}
 
-            &_links{
-                height:100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-around;
-            //    &_logout{
-            //        .icon_text {
-            //         margin-left:0px;
-            //        }
-            //     bottom:0px;
-            //     left:50%;
-            //     // transform: translateX(-50%);
-            //     position: absolute;
-                    
-            //     }
-            }
-        }
 
-        a {
-            text-decoration: none;
-            text-align: left;
-            padding:0rem;
-            margin-bottom: 0rem;
-            height:100%;
-            width:100%;
-            display:flex;
-            justify-content: center;
-            align-items: center;
-            &:hover {
-                text-decoration: none;
-                background-color: rgb(224, 228, 243);
-            }
-                color: #ffffff;
-                cursor: pointer;
-            .icon_text {
-                color: #ffffff;
-                display: flex;
-                margin-left: 0px;
-                transform: translateX(0%);
-                .icon {
-                    display: inline-block;
-                }
-                .text {
-                    display:none;
-
-                }
-            }
+@keyframes leftToRight {
+        0% {
+            left:-3rem;
+            opacity: 0;
         }
-        .selectedLink {
-            background-color: rgb(224, 228, 243);
+        100% {
+            left:0rem;
+            opacity: 1;
         }
 }
