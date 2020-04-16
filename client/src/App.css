@@ -51,6 +51,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
   .MainLayout {
     display: flex;
     flex-direction: column-reverse;
+    height: 100vh;
   }
 }
 
