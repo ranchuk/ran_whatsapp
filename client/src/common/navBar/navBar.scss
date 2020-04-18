@@ -10,9 +10,12 @@
             position: absolute;
             z-index: 1;
             width: 100%;
-            animation: leftToRight 1s;
+            animation: leftToRight 1s ease-in-out;
             
             &_hidden {
+                // animation: rightToLeft 0.3s ease-in-out;
+                // left:-100%;
+                // bottom: -100%;
                 display: none;
             }
     }
@@ -105,11 +108,26 @@ a {
 
 @keyframes leftToRight {
         0% {
-            left:-3rem;
+            left:-100%;
+            // bottom: -100%;
             opacity: 0;
         }
         100% {
             left:0rem;
+            // bottom: 0rem;
             opacity: 1;
         }
+}
+
+@keyframes rightToLeft {
+    0% {
+        left:0rem;
+        bottom: 0rem;
+        opacity: 1;
+    }
+    100% {
+        left:-100%;
+        bottom: -100%;
+        opacity: 1;
+    }
 }

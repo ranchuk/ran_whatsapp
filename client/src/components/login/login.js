@@ -4,12 +4,26 @@ import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import jwt from 'jsonwebtoken';
 import io from "socket.io-client";
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import classnames from 'classnames';
+const setAuthToken = require('../../utils').setAuthToken;
+const socketConnection = require('../../utils').socketConnection;
 
-const setAuthToken = require('../utils').setAuthToken;
-const socketConnection = require('../utils').socketConnection;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: 200,
+    },
+  },
+  label: 'loginForm_input'
+}));
+
 const Login = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const classes = useStyles();
   const dispatch = useDispatch();
 
   const handleSubmit = async e => {
@@ -37,9 +51,17 @@ const Login = props => {
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
       <h1 className="text-center" style={{ marginTop: 40 }}>
-        Ran-Whatsapp
+        Log in
       </h1>
-      <form onSubmit={handleSubmit} className="loginForm">
+      <form onSubmit={handleSubmit} className={classnames(classes.root,"loginForm")}> 
+      {/* <TextField
+          error
+          id="outlined-error"
+          label="Error"
+          defaultValue="Hello World"
+          variant="outlined"
+          // className="loginForm_input_login"
+        /> */}
         <input
           placeholder="Enter username or email address"
           onChange={e => setUsername(e.target.value)}

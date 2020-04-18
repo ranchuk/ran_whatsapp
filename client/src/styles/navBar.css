@@ -25,8 +25,8 @@
     position: absolute;
     z-index: 1;
     width: 100%;
-    -webkit-animation: leftToRight 1s;
-            animation: leftToRight 1s;
+    -webkit-animation: leftToRight 1s ease-in-out;
+            animation: leftToRight 1s ease-in-out;
   }
   .nav_hidden {
     display: none;
@@ -96,7 +96,7 @@ a .icon_text .text {
 
 @-webkit-keyframes leftToRight {
   0% {
-    left: -3rem;
+    left: -100%;
     opacity: 0;
   }
   100% {
@@ -107,11 +107,37 @@ a .icon_text .text {
 
 @keyframes leftToRight {
   0% {
-    left: -3rem;
+    left: -100%;
     opacity: 0;
   }
   100% {
     left: 0rem;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes rightToLeft {
+  0% {
+    left: 0rem;
+    bottom: 0rem;
+    opacity: 1;
+  }
+  100% {
+    left: -100%;
+    bottom: -100%;
+    opacity: 1;
+  }
+}
+
+@keyframes rightToLeft {
+  0% {
+    left: 0rem;
+    bottom: 0rem;
+    opacity: 1;
+  }
+  100% {
+    left: -100%;
+    bottom: -100%;
     opacity: 1;
   }
 }

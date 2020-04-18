@@ -1,8 +1,8 @@
 import React, { useEffect,useState } from "react";
 import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
 import Home from "./components/home/home";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./components/login/login";
+import Register from "./components/register/register";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider, useDispatch } from "react-redux";
 import thunk from "redux-thunk";

@@ -15,7 +15,7 @@ import * as _ from 'lodash';
 
     const handleAddContact = async () => {
         try {
-          const res = await axios.post(`/api/chats/newContact`, {
+          const res = await axios.post(`/api/users/newContact`, {
             username,
             contact: query
           });

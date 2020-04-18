@@ -34,6 +34,11 @@ const sortByDate = (myArray) => {
         else if (itemB.chat.length === 0) return dateA
     });
 };
+const sortByQuery = (myArray, query, username) => {
+  return myArray.filter((item) => {
+      return (item.username1 !== username && item.username1.includes(query)) || (item.username2 !== username && item.username2.includes(query))
+  });
+};
 
 const socketConnection = (username, token, dispatch) => {
   window.socket = io.connect("/",  { query: {token}})
@@ -58,4 +63,5 @@ module.exports = {
     sortByDate,
     setAuthToken,
     socketConnection,
+    sortByQuery,
 }

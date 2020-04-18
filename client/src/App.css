@@ -5,6 +5,9 @@
 @import './styles/chat.css';
 @import './styles/message.css';
 @import './styles/addContact.css';
+@import './styles/login.css';
+@import './styles/register.css';
+
 
 
 ::-webkit-scrollbar {

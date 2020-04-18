@@ -6,6 +6,8 @@ import classnames from 'classnames';
 import * as _ from 'lodash';
 import MenuIcon from '@material-ui/icons/Menu';
 const sortByDate = require('../../utils').sortByDate;
+const sortByQuery = require('../../utils').sortByQuery;
+
 
 const Contacts = ({
   setShowEditModal,
@@ -17,10 +19,15 @@ const Contacts = ({
   const state = useSelector(state => state);
   const dispatch = useDispatch();
   const { chats: chatList, username, isNavbarOpen } = state;
-  // const [isBurgerOpen, setIsBurgerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
+
+  const handleChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+  }
   let chatListCopy = _.cloneDeep(chatList)
-  sortByDate(chatListCopy)
+  searchQuery === '' ? sortByDate(chatListCopy) : chatListCopy = sortByQuery(chatListCopy, searchQuery, state.username);
 
   return (
     <div className={classnames(!showChat ? "contacts" : "contacts_hide")}>
@@ -34,7 +41,7 @@ const Contacts = ({
             </div>
         </span>
         <div className="contacts_search_input_wrapper"> 
-        <input className="contacts_search_input" placeholder="Search messages"></input>
+        <input className="contacts_search_input" placeholder="Search contacts" value={searchQuery}  onChange={handleChange}></input>
         <span className="contacts_search_icon"><SearchTwoToneIcon/></span>
         </div>
       </div>

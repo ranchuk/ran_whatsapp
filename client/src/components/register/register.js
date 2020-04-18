@@ -23,7 +23,7 @@ const Register = () => {
   return (
     <div className="col-md-6 offset-md-3 col-sm-12">
       <h1 className="text-center">Sign In</h1>
-      <form onSubmit={handleSubmit} className="loginForm">
+      <form onSubmit={handleSubmit} className="registerForm">
         <input
           placeholder="Enter username"
           onChange={e => setUsername(e.target.value)}
