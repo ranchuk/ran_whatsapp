@@ -22,11 +22,13 @@ const NavBar = ({history}) => {
         const res = await axios.post(`/api/auth/logout`, {
           username
         });
-         if (res.status === 200) {
-           window.location.href = "/login";
-          }
-          dispatch({type: 'Logout'});
-        // window.location.href = "/login";
+        dispatch({type: 'Logout'});
+        sessionStorage.removeItem('persist:root');
+        window.location.href = "/login";
+
+        //  if (res.status === 200) {
+        //    window.location.href = "/login";
+        //   }
       };
 
     const showForNotLoggedIn = () => {

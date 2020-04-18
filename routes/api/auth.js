@@ -15,6 +15,9 @@ router.post("/login", (req, res) => {
   if (username === "" || password === "") {
     return res.status(404).json("User not found");
   }
+  if(getConnections().find(connection =>connection.username === username)){
+    return res.status(404).json("User already logged in");
+  }
   //Find user by email
   User.findOne({ username: username })
     .then(user => {

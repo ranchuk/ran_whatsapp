@@ -19,7 +19,8 @@ function appReducer(state, action) {
         ...state,
         username: action.payload.username,
         chats: action.payload.chats,
-        token: action.payload.token
+        token: action.payload.token,
+        chatInView: {}
       };
     }
     case "Logout": {

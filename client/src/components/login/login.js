@@ -45,51 +45,79 @@ const Login = props => {
           chats: res.data.chats
         }
       });
-      props.history.push("/");    
+      props.history.push({pathname: "/", state: {isLoggedIn: true}});    
     };
   };
+  
   return (
-    <div className="col-md-6 offset-md-3 col-sm-12">
-      <h1 className="text-center" style={{ marginTop: 40 }}>
-        Log in
-      </h1>
-      <form onSubmit={handleSubmit} className={classnames(classes.root,"loginForm")}> 
-      {/* <TextField
-          error
-          id="outlined-error"
-          label="Error"
-          defaultValue="Hello World"
-          variant="outlined"
-          // className="loginForm_input_login"
-        /> */}
-        <input
-          placeholder="Enter username or email address"
-          onChange={e => setUsername(e.target.value)}
-          value={username}
-          className="form-control"
-        ></input>
-        <input
-          placeholder="Enter password"
-          onChange={e => setPassword(e.target.value)}
-          value={password}
-          className="form-control"
-        ></input>
-        <div className="loginButtons">
-          <Button className="logInButton" variant="primary" type="submit">
-            Log in
-          </Button>
-          <Button
-            variant="secondary"
-            type="submit"
-            onClick={e => {
-              e.preventDefault();
-              window.location.replace("/register");
-            }}
-          >
-            Sign in
-          </Button>
+    <div className="col-md-6 offset-md-3 col-sm-12 login">
+      <div className="login_wrapper">
+                <div class="wrapper fadeInDown">
+                       <div id="formContent">
+                              <h2 class="active"> Sign In </h2>
+                              {/* <h2 class="inactive underlineHover">Sign Up </h2> */}
+                              {/* <div class="fadeIn first">
+                                <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+                              </div> */}
+                              <form onSubmit={handleSubmit}>
+                                <input type="text" id="login" class="fadeIn second" name="login" placeholder="username"  onChange={e => setUsername(e.target.value)}/>
+                                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password" onChange={e => setPassword(e.target.value)}/>
+                                <input type="submit" class="fadeIn fourth" value="Sign in"/>
+                              </form>
+
+                              <div className="login_wrapper_signup">
+                                  <span> Don't have a user?</span>
+                                  <Button
+                                    variant="secondary"
+                                    type="submit"
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      window.location.replace("/register");
+                                    }}
+                                    >
+                                    Sign up
+                                  </Button>
+                              </div>
+
+                      </div>
+                      {/* <div id="formFooter">
+                        <a class="underlineHover" href="#">Forgot Password?</a>
+                      </div> */}
+                </div>
         </div>
-      </form>
+
+        {/* <h1>
+        Log in
+      </h1> */}
+          {/* <form onSubmit={handleSubmit} className={"login_form"}> 
+            <input
+              placeholder="Enter username or email address"
+              onChange={e => setUsername(e.target.value)}
+              value={username}
+              className="form-control"
+            ></input>
+            <input
+              placeholder="Enter password"
+              onChange={e => setPassword(e.target.value)}
+              value={password}
+              className="form-control"
+            ></input>
+            <div className="loginButtons">
+              <Button className="logInButton" variant="primary" type="submit">
+                Log in
+              </Button>
+              <Button
+                variant="secondary"
+                type="submit"
+                onClick={e => {
+                  e.preventDefault();
+                  window.location.replace("/register");
+                }}
+              >
+                Sign in
+              </Button>
+            </div>
+          </form> */}
     </div>
   );
 };

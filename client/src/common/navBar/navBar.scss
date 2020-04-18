@@ -10,7 +10,7 @@
             position: absolute;
             z-index: 1;
             width: 100%;
-            animation: leftToRight 1s ease-in-out;
+            animation: leftToRight 0.3s ease-in-out;
             
             &_hidden {
                 // animation: rightToLeft 0.3s ease-in-out;

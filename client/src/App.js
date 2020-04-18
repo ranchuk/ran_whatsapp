@@ -4,7 +4,7 @@ import Home from "./components/home/home";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import { createStore, applyMiddleware, compose } from "redux";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import thunk from "redux-thunk";
 import "./App.css";
 import { persistStore, persistReducer } from "redux-persist";
@@ -17,8 +17,6 @@ import NavBar from './common/navBar/navBar';
 import jwt from 'jsonwebtoken';
 import axios from "axios";
 
-const socketConnection = require('./utils').socketConnection;
-const setAuthToken = require('./utils').setAuthToken;
 
 const persistConfig = {
   key: "root",
@@ -63,7 +61,6 @@ let persistor = persistStore(store);
 export const Context = React.createContext();
 
 const App = () => {
-// const [isBurgerOpen, setIsBurgerOpen] = useState(false);
 
   return (
     <Provider store={store}>

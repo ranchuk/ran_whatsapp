@@ -1,1 +1,271 @@
-/* No CSS *//*# sourceMappingURL=register.css.map */
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+.register {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.register_wrapper {
+  /* BASIC */
+  /* STRUCTURE */
+  /* TABS */
+  /* FORM TYPOGRAPHY*/
+  /* ANIMATIONS */
+  /* Simple CSS3 Fade-in-down Animation */
+  /* Simple CSS3 Fade-in Animation */
+  /* Simple CSS3 Fade-in Animation */
+  /* OTHERS */
+}
+
+.register_wrapper html {
+  background-color: #56baed;
+}
+
+.register_wrapper body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+}
+
+.register_wrapper a {
+  color: #92badd;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.register_wrapper h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
+  color: #cccccc;
+}
+
+.register_wrapper .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+}
+
+.register_wrapper #formContent {
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 0px;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.register_wrapper #formFooter {
+  background-color: #f6f6f6;
+  border-top: 1px solid #dce8f1;
+  padding: 25px;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+}
+
+.register_wrapper h2.inactive {
+  color: #cccccc;
+}
+
+.register_wrapper h2.active {
+  color: #0d0d0d;
+  border-bottom: 2px solid #5fbae9;
+}
+
+.register_wrapper input[type=button], .register_wrapper input[type=submit], .register_wrapper input[type=reset] {
+  background-color: #56baed;
+  border: none;
+  color: white;
+  padding: 15px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.register_wrapper input[type=button]:hover, .register_wrapper input[type=submit]:hover, .register_wrapper input[type=reset]:hover {
+  background-color: #39ace7;
+}
+
+.register_wrapper input[type=button]:active, .register_wrapper input[type=submit]:active, .register_wrapper input[type=reset]:active {
+  -webkit-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+.register_wrapper input[type=text] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  border-radius: 5px 5px 5px 5px;
+}
+
+.register_wrapper input[type=text]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
+.register_wrapper input[type=text]:placeholder {
+  color: #cccccc;
+}
+
+.register_wrapper .fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.register_wrapper .fadeIn {
+  opacity: 0;
+  -webkit-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+
+.register_wrapper .fadeIn.first {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.register_wrapper .fadeIn.second {
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+
+.register_wrapper .fadeIn.third {
+  -webkit-animation-delay: 0.8s;
+  animation-delay: 0.8s;
+}
+
+.register_wrapper .fadeIn.fourth {
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+.register_wrapper .underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #56baed;
+  content: "";
+  -webkit-transition: width 0.2s;
+  transition: width 0.2s;
+}
+
+.register_wrapper .underlineHover:hover {
+  color: #0d0d0d;
+}
+
+.register_wrapper .underlineHover:hover:after {
+  width: 100%;
+}
+
+.register_wrapper *:focus {
+  outline: none;
+}
+
+.register_wrapper #icon {
+  width: 60%;
+}
+
+.register_wrapper * {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+/*# sourceMappingURL=register.css.map */
