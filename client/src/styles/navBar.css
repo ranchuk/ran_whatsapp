@@ -20,8 +20,17 @@
   padding-top: 2rem;
 }
 
-.nav_hidden {
-  display: none;
+@media only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  .nav {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    -webkit-animation: leftToRight 1s;
+            animation: leftToRight 1s;
+  }
+  .nav_hidden {
+    display: none;
+  }
 }
 
 .nav_icon:hover {
@@ -63,6 +72,15 @@ a .icon_text {
           transform: translateX(-50%);
 }
 
+@media only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  a .icon_text {
+    margin-left: 55%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    font-size: 1.5rem;
+  }
+}
+
 a .icon_text .icon {
   display: inline-block;
 }
@@ -74,13 +92,6 @@ a .icon_text .text {
 
 .selectedLink {
   background-color: #e0e4f3;
-}
-
-@media only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
-  .nav {
-    -webkit-animation: leftToRight 1s;
-            animation: leftToRight 1s;
-  }
 }
 
 @-webkit-keyframes leftToRight {

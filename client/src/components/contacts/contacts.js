@@ -33,7 +33,7 @@ const Contacts = ({
                 <div className="bar3"></div>
             </div>
         </span>
-        <div className="contacts_search_input_wrraper"> 
+        <div className="contacts_search_input_wrapper"> 
         <input className="contacts_search_input" placeholder="Search messages"></input>
         <span className="contacts_search_icon"><SearchTwoToneIcon/></span>
         </div>

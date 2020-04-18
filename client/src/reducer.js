@@ -22,21 +22,41 @@ function appReducer(state, action) {
         token: action.payload.token
       };
     }
+    case "Logout": {
+      return {
+        ...state,
+        username: '',
+        chats: [],
+        chatInView: {},
+        token: ''
+      };
+    }
     case "OnlineStatus": {
       //TODO update user in chat status
       const { username, status } = action.payload;
       const newChats = JSON.parse(JSON.stringify(state.chats));
-
+      let newChatInView = JSON.parse(JSON.stringify(state.chatInView));
       state.chats.forEach((chat, index) => {
         if (chat.username1 === username || chat.username2 === username) {
           newChats[index].isOnline = status === "online" ? true : false;
           return;
         }
+
+        if (Object.keys(state.chatInView).length > 0) {
+          //maby we didnt pick chat yet
+          if (state.chatInView.username1 === username || state.chatInView.username2 === username) {
+            newChatInView = {
+                ...state.chatInView,
+                isOnline:  newChats[index].isOnline
+            }
+          }
+        }
       });
 
       return {
         ...state,
-        chats: newChats
+        chats: newChats,
+        chatInView: newChatInView
       };
     }
     case "AddMessage": {

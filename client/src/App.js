@@ -35,7 +35,7 @@ var initialState = {
 //   const data = JSON.parse(sessionStorage.getItem("persist:root"));
 //   if(data.token){
 //       setAuthToken(data.token.replace(/['"]+/g, ""));
-//       axios.get("/api/users/getChats").then((res)=>{
+//       axios.get("/api/chats/getChats").then((res)=>{
 //         socketConnection(data.username.replace(/['"]+/g, ""), data.token.replace(/['"]+/g, ""), store.dispatch, props.history, res.data.chats);
 //       }).catch((e)=>{
 //         console.log(e)

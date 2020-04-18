@@ -62,7 +62,7 @@ const Chat = ({ item, setShowChat, showChat }) => {
   };
   const handleDelete = async e => {
     const res = await axios.delete(
-      `/api/users/chat/delete/${chatInView.username1}/${chatInView.username2}`
+      `/api/chats/delete/${chatInView.username1}/${chatInView.username2}`
     );
     if (res.status === 200) {
         dispatch({
@@ -89,7 +89,10 @@ const Chat = ({ item, setShowChat, showChat }) => {
             <ArrowBackIcon onClick={(e)=>setShowChat(false)} />
           </div>
           <div className="chat_header_image_name">
-              <img className="contactItem_image" src={require("../../assets/img_avatar.png")} alt="Avatar" style={{width:"50px"}}/>
+              <div className="contactItem_image">
+                    <img className="contactItem_image" src={require("../../assets/img_avatar.png")} alt="Avatar" style={{width:"50px"}}/>
+                    <span className={classnames(chatInView.isOnline ? 'contactItem_image_isOnline' : 'contactItem_image_isOffline')}></span>
+              </div>
               <span className="chat_header_name">{chatInView.reciever}</span>
           </div>
           <span className="chat_header_edit"

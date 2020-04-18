@@ -5,6 +5,9 @@ const path = require("path");
 const bodyparser = require("body-parser");
 const loggerMiddleware = require('./utils').loggerMiddleware;
 const users = require("./routes/api/users");
+const auth = require("./routes/api/auth");
+const chats = require("./routes/api/chats");
+
 // var winston = require('winston');
 // var expressWinston = require('express-winston');
 
@@ -16,7 +19,9 @@ app.use(bodyparser.json());
 app.use(loggerMiddleware)
 
 // Use Routes
+app.use("/api/auth", auth);
 app.use("/api/users", users);
+app.use("/api/chats", chats);
 
 connectDB(function(err, db) {
   if (err) {
