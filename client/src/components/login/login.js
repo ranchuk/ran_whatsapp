@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import jwt from 'jsonwebtoken';
 import io from "socket.io-client";
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = props => {
+  const state = useSelector((state)=>state)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
@@ -48,6 +49,14 @@ const Login = props => {
       props.history.push({pathname: "/", state: {isLoggedIn: true}});    
     };
   };
+
+
+
+  useEffect(()=>{
+    if(state.token !== '') {
+      props.history.push({pathname: "/"});    
+    }
+  },[])
   
   return (
     <div className="col-md-6 offset-md-3 col-sm-12 login">

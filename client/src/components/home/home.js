@@ -28,6 +28,9 @@ const Home = (props) => {
         }
       });
     }
+    else{
+      window.location.replace("/login");
+    }
   }
 
   useEffect(()=>{

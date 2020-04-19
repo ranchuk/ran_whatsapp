@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
+import { useDispatch, useSelector } from "react-redux";
 
-const Register = () => {
+const Register = (props) => {
+  const state = useSelector((state)=>state)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(()=>{
+    if(state.token !== '') {
+      props.history.push({pathname: "/"});    
+    }
+  },[])
+
   useEffect(() => {
-    sessionStorage.clear();
+    // sessionStorage.clear();
   }, []);
 
   const handleSubmit = async e => {

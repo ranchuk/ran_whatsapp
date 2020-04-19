@@ -27,7 +27,7 @@ const Contacts = ({
     setSearchQuery(query);
   }
   let chatListCopy = _.cloneDeep(chatList)
-  searchQuery === '' ? sortByDate(chatListCopy) : chatListCopy = sortByQuery(chatListCopy, searchQuery.trim(), state.username);
+  searchQuery === '' ? sortByDate(chatListCopy) : chatListCopy = sortByQuery(chatListCopy, searchQuery, state.username);
 
   return (
     <div className={classnames(!showChat ? "contacts" : "contacts_hide")}>

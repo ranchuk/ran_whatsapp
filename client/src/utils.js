@@ -35,8 +35,9 @@ const sortByDate = (myArray) => {
     });
 };
 const sortByQuery = (myArray, query, username) => {
+  const lowerCaseQuery = query.trim().toLowerCase()
   return myArray.filter((item) => {
-      return (item.username1 !== username && item.username1.includes(query)) || (item.username2 !== username && item.username2.includes(query))
+      return (item.username1 !== username && item.username1.toLowerCase().includes(lowerCaseQuery)) || (item.username2 !== username && item.username2.toLowerCase().includes(lowerCaseQuery))
   });
 };
 
