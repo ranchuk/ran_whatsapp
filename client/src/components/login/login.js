@@ -69,8 +69,8 @@ const Login = props => {
                                 <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
                               </div> */}
                               <form onSubmit={handleSubmit}>
-                                <input type="text" id="login" class="fadeIn second" name="login" placeholder="username"  onChange={e => setUsername(e.target.value)}/>
-                                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password" onChange={e => setPassword(e.target.value)}/>
+                                <input type="text" id="login" class="fadeIn second" name="login" placeholder="username" value={username}  onChange={e => setUsername(e.target.value.toLowerCase())}/>
+                                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password" value={password} onChange={e => setPassword(e.target.value.toLowerCase())}/>
                                 <input type="submit" class="fadeIn fourth" value="Sign in"/>
                               </form>
 

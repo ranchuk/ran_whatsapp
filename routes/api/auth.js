@@ -10,8 +10,8 @@ const User = require("../../config/models/user");
 const Chat = require("../../config/models/chat");
 
 router.post("/login", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  const username = req.body.username.toLowerCase();
+  const password = req.body.password.toLowerCase();
   if (username === "" || password === "") {
     return res.status(404).json("User not found");
   }
@@ -70,8 +70,8 @@ router.post("/logout", (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  const username = req.body.username.toLowerCase();
+  const password = req.body.password.toLowerCase();
 
   //Find user by email
   User.findOne({ username: username })
