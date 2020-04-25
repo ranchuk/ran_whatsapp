@@ -1,4 +1,5 @@
 .contactItem {
+    min-height:5rem;
     display: flex;
     padding:1rem;
     font-size: 1rem;
@@ -39,6 +40,15 @@
                 color:lightgray;
                 font-weight: 500;
                 font-size: 0.7rem;
+            }
+            &_notification {
+                text-align: center;
+                padding:1px 8px;
+                max-width: 30px;
+                border-radius: 50%;
+                background-color: red;
+                transform: scale();
+                color: white;
             }
         }
     }

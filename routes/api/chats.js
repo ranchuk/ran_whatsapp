@@ -9,6 +9,44 @@ const verifyToken = require('../../config/passport').verifyToken;
 // Load User model
 const User = require("../../config/models/user");
 const Chat = require("../../config/models/chat");
+router.put("/messagesReadUpdate", verifyToken, (req, res) => {
+
+  const { _id }= req.body;
+  const decoded_token = req.decoded_token;
+  console.log(
+  {
+    _id,
+    decoded_token_username: decoded_token.username
+  }
+  )
+
+  if(decoded_token){
+    Chat.findById(_id)
+      .then(chat => {
+          chat.chat.forEach(message => {
+            if(message.reciever === decoded_token.username){
+              message.isRead = true;
+            }
+          });
+  
+          // chat.chat = newChatArray
+          chat.save()
+          .then((chat)=>{
+            res.status(200).json({ success: true, chat});
+          })
+          .catch((err)=>{
+              console.error(err);
+              res.status(404).json({ success: false });
+          })
+       })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+  else{
+    res.status(404).json({ success: false });
+  }
+});
 
 router.get("/getChats", verifyToken, (req, res) => {
 

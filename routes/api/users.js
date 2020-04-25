@@ -5,7 +5,7 @@ const verifyToken = require('../../config/passport').verifyToken;
 // Load User model
 const User = require("../../config/models/user");
 const Chat = require("../../config/models/chat");
-
+const connections = require("../../socket").getConnections();
 router.post("/newContact",verifyToken, (req, res) => {
   const { username, contact } = req.body;
 
@@ -29,7 +29,7 @@ router.post("/newContact",verifyToken, (req, res) => {
           if (chat.length !== 0) {
             return res.status(200).json({message: "Chat already exist"});
           }
-          const newChat = new Chat({
+          let newChat = new Chat({
             username1: username,
             username2: contact,
             chat: []
@@ -37,7 +37,10 @@ router.post("/newContact",verifyToken, (req, res) => {
 
           newChat
             .save()
-            .then(user => res.status(200).json({message: "success", newChat}))
+            .then(chat => {
+              const newChat = {...JSON.parse(JSON.stringify(chat)), isOnline: connections.find((connection)=>connection.username === contact)}
+              res.status(200).json({message: "success", newChat})
+            })
             .catch(err => console.log(err));
         })
         .catch(err => {

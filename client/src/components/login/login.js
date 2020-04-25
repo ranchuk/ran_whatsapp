@@ -3,28 +3,14 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import jwt from 'jsonwebtoken';
-import io from "socket.io-client";
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
 const setAuthToken = require('../../utils').setAuthToken;
 const socketConnection = require('../../utils').socketConnection;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: 200,
-    },
-  },
-  label: 'loginForm_input'
-}));
 
 const Login = props => {
   const state = useSelector((state)=>state)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   const handleSubmit = async e => {
@@ -61,17 +47,17 @@ const Login = props => {
   return (
     <div className="col-md-6 offset-md-3 col-sm-12 login">
       <div className="login_wrapper">
-                <div class="wrapper fadeInDown">
+                <div className="wrapper fadeInDown">
                        <div id="formContent">
-                              <h2 class="active"> Sign In </h2>
+                              <h2 className="active"> Sign In </h2>
                               {/* <h2 class="inactive underlineHover">Sign Up </h2> */}
                               {/* <div class="fadeIn first">
                                 <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
                               </div> */}
                               <form onSubmit={handleSubmit}>
-                                <input type="text" id="login" class="fadeIn second" name="login" placeholder="username" value={username}  onChange={e => setUsername(e.target.value.toLowerCase())}/>
-                                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password" value={password} onChange={e => setPassword(e.target.value.toLowerCase())}/>
-                                <input type="submit" class="fadeIn fourth" value="Sign in"/>
+                                <input type="text" id="login" className="fadeIn second" name="login" placeholder="username" value={username}  onChange={e => setUsername(e.target.value.toLowerCase())}/>
+                                <input type="text" id="password" className="fadeIn third" name="login" placeholder="password" value={password} onChange={e => setPassword(e.target.value.toLowerCase())}/>
+                                <input type="submit" className="fadeIn fourth" value="Sign in"/>
                               </form>
 
                               <div className="login_wrapper_signup">

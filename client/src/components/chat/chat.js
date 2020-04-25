@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useDebugValue } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Message from '../message/message';
@@ -25,16 +25,30 @@ const Chat = ({ item, setShowChat, showChat }) => {
   const dispatch = useDispatch();
   const messagesEndRef = React.createRef()
 
-  const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
-  }
+  // useEffect(()=>{
+  //   if(chatInView.chat && chatInView.chat.length > 0){
+  //     if(chatInView.chat[chatInView.chat.length-1].reciever === state.username){
+  //       dispatch({type: "updateChatInViewReadStatus"})
+  //       axios.put("/api/chats/messagesReadUpdate", {_id: item._id})
+  //       .then((res)=>{
+  //         console.log(res)
+  //       })
+  //       .catch((err)=>{
+  //         console.log(err)
+  //       })
+  //     }
+  //   }
+  // },[chatInView.chat])
+
   useEffect(()=>{
-    Object.keys(chatInView).length !== 0 && scrollToBottom();
-  },[chatInView])
+    Object.keys(chatInView).length !== 0 && messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  },[chatInView, messagesEndRef])
 
   useEffect(()=>{
     //TO DO - GET data of user in chat(pictures and other info needed)
-
+    if(item.chat && item.chat[item.chat.length -1].reciever === username && !item.chat[item.chat.length -1].isRead){
+      axios.put("/api/chats/messagesReadUpdate", {_id: item._id})
+    }
   },[chatInView])
   const handleChange = e => {
     setNewMessage(e.target.value);
@@ -81,7 +95,6 @@ const Chat = ({ item, setShowChat, showChat }) => {
     }
     setShowEditModal(false);
   };
-
   return Object.keys(chatInView).length === 0  ? null  : 
   <div className={classnames(showChat ? "chat" : "chat_hide")} onClick={()=>{}/**dispatch({type: "OPEN_CLOSE_NAVBAR", payload: false})**/}>
         <div className="chat_header">

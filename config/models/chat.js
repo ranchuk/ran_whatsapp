@@ -15,7 +15,8 @@ const ChatSchema = new Schema(
         time: String,
         sender: String,
         reciever: String,
-        message: String
+        message: String,
+        isRead: Boolean,
       }
     ]
   },

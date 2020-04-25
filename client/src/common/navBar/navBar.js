@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
-import Button from "react-bootstrap/Button";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
@@ -16,7 +15,6 @@ const NavBar = ({history}) => {
     const [showAddContactModal,setShowAddContactModal] = useState(false);
     const state = useSelector(state => state);
     const { username, isNavbarOpen } = state;
-    const currentPath = history.location.pathname;
     const handleLogOut = async () => {
         sessionStorage.clear();
         const res = await axios.post(`/api/auth/logout`, {

@@ -1,4 +1,5 @@
 .contactItem {
+  min-height: 5rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -66,6 +67,17 @@
   color: lightgray;
   font-weight: 500;
   font-size: 0.7rem;
+}
+
+.contactItem_name_time_notification {
+  text-align: center;
+  padding: 1px 8px;
+  max-width: 30px;
+  border-radius: 50%;
+  background-color: red;
+  -webkit-transform: scale();
+          transform: scale();
+  color: white;
 }
 
 .contactItem_edit {

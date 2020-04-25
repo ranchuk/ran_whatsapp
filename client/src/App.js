@@ -1,21 +1,18 @@
-import React, { useEffect,useState } from "react";
-import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/home/home";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import { createStore, applyMiddleware, compose } from "redux";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import "./App.css";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage/session";
 import { PersistGate } from "redux-persist/integration/react";
-import io from "socket.io-client";
 import appReducer from "./reducer";
 import PrivateRoute from './common/privateRoute';
 import NavBar from './common/navBar/navBar';
-import jwt from 'jsonwebtoken';
-import axios from "axios";
 
 
 const persistConfig = {
@@ -29,18 +26,7 @@ var initialState = {
   token: '',
   isNavbarOpen: false
 };
-// if (sessionStorage.getItem("persist:root")) {
-//   const data = JSON.parse(sessionStorage.getItem("persist:root"));
-//   if(data.token){
-//       setAuthToken(data.token.replace(/['"]+/g, ""));
-//       axios.get("/api/chats/getChats").then((res)=>{
-//         socketConnection(data.username.replace(/['"]+/g, ""), data.token.replace(/['"]+/g, ""), store.dispatch, props.history, res.data.chats);
-//       }).catch((e)=>{
-//         console.log(e)
-//         // window.location.href = "/login";
-//       })
-//   }
-// }
+
 const persistedReducer = persistReducer(persistConfig, appReducer);
 
 const middleware = [thunk];

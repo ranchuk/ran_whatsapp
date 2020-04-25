@@ -3,7 +3,21 @@
     height: 100%;
 }
 .nav {
-    
+    @media only screen 
+    and (max-device-width: 667px) 
+    and (-webkit-min-device-pixel-ratio: 2) { 
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            animation: leftToRight 0.3s ease-in-out;
+            
+            &_hidden {
+                // animation: rightToLeft 0.3s ease-in-out;
+                // left:-100%;
+                // bottom: -100%;
+                display: none;
+            }
+    }
     @media only screen 
     and (max-device-width: 667px) 
     and (-webkit-min-device-pixel-ratio: 2) { 
