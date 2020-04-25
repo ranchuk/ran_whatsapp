@@ -14,7 +14,7 @@ const ContactItem = ({item, isOnline, reciever, setReciever,setShowChat}) => {
 
   const updateIsRead = () => {
     // console.log(item)
-    if(item.chat[item.chat.length -1].reciever === username && !item.chat[item.chat.length -1].isRead){
+    if(item.chat && item.chat[item.chat.length -1] && item.chat[item.chat.length -1].reciever === username && !item.chat[item.chat.length -1].isRead){
       axios.put("/api/chats/messagesReadUpdate", {_id: item._id})
     }
   }
@@ -36,13 +36,15 @@ const ContactItem = ({item, isOnline, reciever, setReciever,setShowChat}) => {
                     <img className="contactItem_image" src={require("../../assets/img_avatar.png")} alt="Avatar" style={{width:"50px"}}/>
                     <span className={classnames(isOnline ? 'contactItem_image_isOnline' : 'contactItem_image_isOffline')}></span>
                   </div>
-                  <div className="contactItem_name">
-                    <div className="contactItem_name_time">
-                      <span className="contactItem_name_time_name"> {reciever}</span>
-                      <span className="contactItem_name_time_time"> {lastMessageDate}</span>
-                      {unReadMessages ? <span className="contactItem_name_time_notification">{unReadMessages}</span> : null}
-                    </div>
-                    <span className="contactItem_name_message">{lastMessage}</span>
+                  <div className="contactItem_textInfo_wrapper">
+                      <div className="contactItem_name_time">
+                        <span className="contactItem_name_time_name"> {reciever}</span>
+                        <span className="contactItem_name_time_time"> {lastMessageDate}</span>
+                      </div>
+                      <div className="contactItem_message_notification">
+                      <span className="contactItem_message">{lastMessage}</span>
+                      {unReadMessages ? <span className="contactItem_notification">{unReadMessages}</span> : null}
+                      </div>
                   </div>
         </div>
 };

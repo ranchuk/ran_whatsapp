@@ -7,9 +7,6 @@
   font-size: 1rem;
   background-color: white;
   margin: 0.5px 0rem 0.5px 0rem;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -69,15 +66,44 @@
   font-size: 0.7rem;
 }
 
-.contactItem_name_time_notification {
+.contactItem_textInfo_wrapper {
+  margin-left: 15px;
+  width: 100%;
+}
+
+.contactItem_textInfo_wrapper .contactItem_name_time {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.contactItem_textInfo_wrapper .contactItem_notification {
   text-align: center;
-  padding: 1px 8px;
-  max-width: 30px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   background-color: red;
   -webkit-transform: scale();
           transform: scale();
   color: white;
+}
+
+.contactItem_textInfo_wrapper .contactItem_message_notification {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.contactItem_textInfo_wrapper .contactItem_message_notification .contactItem_message {
+  max-width: 13rem;
+  max-height: 25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .contactItem_edit {

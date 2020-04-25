@@ -105,23 +105,28 @@ function appReducer(state, action) {
       return { ...state, ...obj };
     }
     case "ChatInView": {
-      let newChatInView = JSON.parse(JSON.stringify(action.payload));
-      newChatInView.chat.forEach((message)=>{
-        if(message.reciever === state.username){
-          message.isRead = true;
-        }
-      })
+      if(Object.keys(action.payload).length > 0){
+          let newChatInView = JSON.parse(JSON.stringify(action.payload));
+          newChatInView.chat.forEach((message)=>{
+            if(message.reciever === state.username){
+              message.isRead = true;
+            }
+          })
 
-      let newChats = JSON.parse(JSON.stringify(state.chats))
-      let newChat = newChats.find((chat)=>{
-       return (chat.username1 === newChatInView.username1 && chat.username2 === newChatInView.username2) || (chat.username1 === newChatInView.username2 && chat.username2 === newChatInView.username1)
-      })
-      newChat.chat.forEach((message)=>{
-        if(message.reciever === state.username){
-          message.isRead = true;
-        }
-      })
-      return { ...state, chatInView: newChatInView, chats: newChats};
+          let newChats = JSON.parse(JSON.stringify(state.chats))
+          let newChat = newChats.find((chat)=>{
+          return (chat.username1 === newChatInView.username1 && chat.username2 === newChatInView.username2) || (chat.username1 === newChatInView.username2 && chat.username2 === newChatInView.username1)
+          })
+          newChat.chat.forEach((message)=>{
+            if(message.reciever === state.username){
+              message.isRead = true;
+            }
+          })
+          return { ...state, chatInView: newChatInView, chats: newChats};
+      }
+      else {
+        return { ...state, chatInView: {}};
+      }
     }
     // case "updateChatInViewReadStatus": {
     //   let newChatInView = JSON.parse(JSON.stringify(state.chatInView));

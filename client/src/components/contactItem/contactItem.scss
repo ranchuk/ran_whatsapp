@@ -5,7 +5,6 @@
     font-size: 1rem;
     background-color:white;
     margin: 0.5px 0rem 0.5px 0rem;
-    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid rgb(224, 228, 243);
     &_name {
@@ -41,17 +40,42 @@
                 font-weight: 500;
                 font-size: 0.7rem;
             }
+        }
+    }
+    &_textInfo_wrapper {
+        margin-left: 15px;
+        width: 100%;
+        .contactItem_name_time {
+            display: flex;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .contactItem {
             &_notification {
                 text-align: center;
-                padding:1px 8px;
-                max-width: 30px;
+                // padding:1px 8px;
+                // max-width: 30px;
+                width:25px;
+                height: 25px;
                 border-radius: 50%;
                 background-color: red;
                 transform: scale();
                 color: white;
             }
+            &_message_notification {
+                display: flex;
+                justify-content: space-between;
+
+                .contactItem_message {
+                    max-width: 13rem;
+                    max-height: 25px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
         }
     }
+
     &_edit{
         margin-right: 0px;
 

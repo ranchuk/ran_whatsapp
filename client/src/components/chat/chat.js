@@ -46,7 +46,7 @@ const Chat = ({ item, setShowChat, showChat }) => {
 
   useEffect(()=>{
     //TO DO - GET data of user in chat(pictures and other info needed)
-    if(item.chat && item.chat[item.chat.length -1].reciever === username && !item.chat[item.chat.length -1].isRead){
+    if(item.chat && item.chat[item.chat.length -1] && item.chat[item.chat.length -1].reciever === username && !item.chat[item.chat.length -1].isRead){
       axios.put("/api/chats/messagesReadUpdate", {_id: item._id})
     }
   },[chatInView])
@@ -99,7 +99,7 @@ const Chat = ({ item, setShowChat, showChat }) => {
   <div className={classnames(showChat ? "chat" : "chat_hide")} onClick={()=>{}/**dispatch({type: "OPEN_CLOSE_NAVBAR", payload: false})**/}>
         <div className="chat_header">
           <div className="chat_header_back">
-            <ArrowBackIcon onClick={(e)=>setShowChat(false)} />
+            <ArrowBackIcon onClick={(e)=>{setShowChat(false); dispatch({ type: "ChatInView",payload:{}})}} />
           </div>
           <div className="chat_header_image_name">
               <div className="contactItem_image">
