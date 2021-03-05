@@ -1,0 +1,41 @@
+version: '3'
+services:
+  client:
+    container_name: ran-chat-app-client
+    image: ranchukdocker/ran-chat-app-client
+    ports:
+      - '3000:3000'
+  server:
+    container_name: ran-chat-app-server
+    image: ranchukdocker/ran-chat-app-server
+    ports:
+      - '5000:5000'
+    links:
+          - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'
+
+# version: '3'
+# services:
+#   client:
+#     container_name: ran-chat-app-client
+#     restart: always
+#     build: client/
+#     ports:
+#       - '3000:3000'
+#   server:
+#     container_name: ran-chat-app-server
+#     restart: always
+#     build: .
+#     ports:
+#       - '5000:5000'
+#     links:
+#           - mongo
+#   mongo:
+#     container_name: mongo
+#     image: mongo
+#     ports:
+#       - '27017:27017'

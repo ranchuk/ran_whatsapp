@@ -68,6 +68,7 @@ const NavBar = ({history}) => {
               </>
     }
     return (
+            username === '' ? <></> : 
             <nav className={classnames("nav", !isNavbarOpen ? "nav_hidden" : null)}>
                               {/*<span className="center_box"><WhatsAppIcon className="nav_icon"/></span>}\
                                  <span className="center_box">
@@ -75,7 +76,7 @@ const NavBar = ({history}) => {
                                 </span> */}
 
                 <div className="nav_links" onClick={()=>dispatch({type: 'OPEN_CLOSE_NAVBAR', payload: !isNavbarOpen})}>
-                {username === '' ? showForNotLoggedIn(): showForLoggedIn()}
+                {showForLoggedIn()}
                 </div>
                 {showAddContactModal ? <Portal container={modalRoot}><AddContact showNewContactModal={showAddContactModal} setNewContactModal={setShowAddContactModal}/></Portal> : null}                  
             </nav>

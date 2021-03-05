@@ -53,7 +53,7 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <Router>
           <div className="MainLayout">
-            <NavBar />
+              <NavBar />
              <div className="MainContainer">
               <Switch>
                 <PrivateRoute exact path="/" component={Home} />
