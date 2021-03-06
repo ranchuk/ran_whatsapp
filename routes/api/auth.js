@@ -90,7 +90,44 @@ router.post("/register", (req, res) => {
       
             newUser
               .save()
-              .then(user => res.json(user))
+              .then( async user => {
+                const connections = getConnections();
+                
+                let users = await User.find({}, {username: true, _id: 0})
+                users = users && users.filter((user)=>user.username !== newUser.username).map(user=>user.username) // remove myself from list
+                console.log(users)
+
+                const Promises = []
+
+                users.forEach((contact) => {
+                      let newChat = new Chat({
+                        username1: newUser.username,
+                        username2: contact,
+                        chat: []
+                      });
+
+                      Promises.push(newChat.save())
+            
+                })
+
+                const newChats = []
+
+                const resolvedPromises = await Promise.all(Promises)
+
+                resolvedPromises.forEach((chat) => {
+                  const newChat = {...JSON.parse(JSON.stringify(chat)), isOnline: connections.find((connection)=>connection.username === contact)}
+                  newChats.push(newChat)
+                })
+
+
+                jwt.sign(
+                  {username: user.username}, 
+                  require('../../config/keys/keys').secretOrKey, { expiresIn: '1h' }, 
+                  (err, token)=>{
+                    res.json({ success: true, username: user.username, chats: newChats, token });
+                });
+              
+              })
               .catch(err => console.log(err));
         });
     });
